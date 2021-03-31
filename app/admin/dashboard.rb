@@ -1,8 +1,13 @@
 ActiveAdmin.register_page "Dashboard" do
     menu priority: 1, label: "Dashboard"
-    
+
     content do
+        panel "" do
+            button_to "Déconnexion", destroy_user_session_path, method: :delete
+        end
         panel "Statistiques" do
+            div { span { "Par " } + b { "SegFault#5814" } }
+            br
             ul do
                 li { "Nombre de cartes : #{Card.count}" }
                 li { "Nombre d'items : #{Item.count}" }

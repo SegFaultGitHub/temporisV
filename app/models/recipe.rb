@@ -30,6 +30,6 @@ class Recipe < ActiveRecord::Base
     end
 
     def cards
-        [card1, card2, card3, card4, card5].uniq.sort_by(&:name)
+        [card1, card2, card3, card4, card5].compact.uniq.sort_by(&:name)
     end
 end

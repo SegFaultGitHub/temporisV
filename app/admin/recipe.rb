@@ -2,12 +2,13 @@ ActiveAdmin.register Recipe do
     actions :all
     permit_params :item_id, :card1_id, :card2_id, :card3_id, :card4_id, :card5_id, :quantity
 
-    filter :item
+    before_filter :skip_sidebar!, :only => :index
     
     index do
         column "Item" do |recipe|
             link_to recipe.item.name, [:admin, recipe]
         end
+        column :quantity
         column "Card 1" do |recipe|
             link_to recipe.card1.name, [:admin, recipe.card1]
         end
@@ -52,9 +53,23 @@ ActiveAdmin.register Recipe do
         end
     end
     
+    controller do
+        def create
+            create! do |success, failure|
+                success.html { redirect_to collection_url }
+            end
+        end
+        
+        def update
+            update! do |success, failure|
+                success.html { redirect_to collection_url }
+            end
+        end
+    end
+    
     form html: { enctype: "multipart/form-data" } do |f|
         f.inputs "Details" do
-            f.input :item, collection: Item.order(:name)
+            f.input :item, collection: Item.order(:name), selected: params[:item_id]
             f.input :card1, collection: Card.order(:name)
             f.input :card2, collection: Card.order(:name)
             f.input :card3, collection: Card.order(:name)

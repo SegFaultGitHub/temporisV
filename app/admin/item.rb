@@ -1,10 +1,10 @@
 ActiveAdmin.register Item do
     actions :all
     permit_params :name
-
+    
     filter :name, filters: [:contains]
     filter :level, filters: [:greater_than, :less_than]
-
+    
     config.sort_order = "name_asc"
     index do
         column "Name" do |item|
@@ -14,7 +14,7 @@ ActiveAdmin.register Item do
             item.recipes.size
         end
     end
-
+    
     show do
         attributes_table do
             row :name
@@ -39,12 +39,29 @@ ActiveAdmin.register Item do
                 end
             end
         end
+        panel "" do
+            button_to "Ajouter une recette", "/admin/recipes/new", method: :get, params: { item_id: resource.id }
+        end
     end
-
+    
+    controller do
+        def create
+            create! do |success, failure|
+                success.html { redirect_to collection_url }
+            end
+        end
+        
+        def update
+            update! do |success, failure|
+                success.html { redirect_to collection_url }
+            end
+        end
+    end
+    
     form html: { enctype: "multipart/form-data" } do |f|
-      f.inputs "Details" do
-        f.input :name, as: :string
-      end
-      f.actions
+        f.inputs "Details" do
+            f.input :name, as: :string
+        end
+        f.actions
     end
 end

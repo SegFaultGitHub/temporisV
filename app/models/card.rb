@@ -2,6 +2,10 @@ class Card < ActiveRecord::Base
     validates :name, presence: true
     validates :level, :numericality => { :greater_than_or_equal_to => 1 }
 
+    before_validation :truncate_name
+    def truncate_name
+        self.name.strip!
+    end
     validate :validate_name
     def validate_name
         errors.add(:name, "Duplicate name") if Card.select do |card|

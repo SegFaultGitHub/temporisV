@@ -3,6 +3,10 @@ class Item < ActiveRecord::Base
 
     has_many :recipes
 
+    before_validation :truncate_name
+    def truncate_name
+        self.name.strip!
+    end
     validate :validate_name
     def validate_name
         errors.add(:name, "Duplicate name") if Item.select do |item|

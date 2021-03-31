@@ -6,6 +6,7 @@ class Card < ActiveRecord::Base
     def truncate_name
         self.name.strip!
     end
+
     validate :validate_name
     def validate_name
         errors.add(:name, "Duplicate name") if Card.select do |card|
@@ -15,6 +16,11 @@ class Card < ActiveRecord::Base
         end
     end
 
+    has_many :recipes_card1, foreign_key: "card1_id", class_name: "Recipe", dependent: :restrict_with_error
+    has_many :recipes_card2, foreign_key: "card2_id", class_name: "Recipe", dependent: :restrict_with_error
+    has_many :recipes_card3, foreign_key: "card3_id", class_name: "Recipe", dependent: :restrict_with_error
+    has_many :recipes_card4, foreign_key: "card4_id", class_name: "Recipe", dependent: :restrict_with_error
+    has_many :recipes_card5, foreign_key: "card5_id", class_name: "Recipe", dependent: :restrict_with_error
     def recipes
         Recipe.where("
             card1_id = ? OR

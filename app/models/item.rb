@@ -1,7 +1,7 @@
 class Item < ActiveRecord::Base
     validates :name, presence: true
 
-    has_many :recipes
+    has_many :recipes, dependent: :restrict_with_error
 
     before_validation :truncate_name
     def truncate_name

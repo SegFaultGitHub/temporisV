@@ -4,7 +4,6 @@ ActiveAdmin.register Recipe do
 
     filter :item
     
-    config.sort_order = "item_asc"
     index do
         column "Item" do |recipe|
             link_to recipe.item.name, [:admin, recipe]

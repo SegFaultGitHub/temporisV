@@ -1,16 +1,19 @@
 ActiveAdmin.register Item do
     menu priority: 2
     actions :all
-    permit_params :name
+    permit_params :name, :item_class, :level
     
     filter :name, filters: [:contains]
     filter :level, filters: [:greater_than, :less_than]
+    filter :item_class, as: :check_boxes, collection: proc { Item.item_classes }
     
     config.sort_order = "name_asc"
     index do
         column "Name" do |item|
             link_to item.name, [:admin, item]
         end
+        column :item_class
+        column :level
         column "Recipes" do |item|
             item.recipes.size
         end
@@ -62,6 +65,8 @@ ActiveAdmin.register Item do
     form html: { enctype: "multipart/form-data" } do |f|
         f.inputs "Details" do
             f.input :name, as: :string
+            f.input :item_class, collection: Item.item_classes
+            f.input :level, as: :number
         end
         f.actions
     end

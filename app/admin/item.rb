@@ -5,7 +5,7 @@ ActiveAdmin.register Item do
     
     filter :name, filters: [:contains]
     filter :level, filters: [:greater_than, :less_than]
-    filter :item_class, as: :check_boxes, collection: proc { Item.item_classes }
+    filter :item_class, as: :select, collection: Item.item_classes
     
     config.sort_order = "name_asc"
     index do

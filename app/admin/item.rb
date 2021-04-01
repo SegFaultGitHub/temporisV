@@ -22,6 +22,8 @@ ActiveAdmin.register Item do
     show do
         attributes_table do
             row :name
+            row :item_class
+            row :level
             row :recipes do
                 table do
                     tr do

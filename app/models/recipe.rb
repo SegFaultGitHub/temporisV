@@ -36,7 +36,6 @@ class Recipe < ActiveRecord::Base
         after_item = Item.find_by(id: changes[:item_id].last)
         before_item.update!(recipe_count: before_item.recipe_count - 1) if before_item
         after_item.update!(recipe_count: after_item.recipe_count + 1) if after_item
-        debugger
     end
     def decrement_item_recipe_count
         item.update!(recipe_count: item.recipe_count - 1)

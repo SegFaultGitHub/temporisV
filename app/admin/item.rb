@@ -5,8 +5,8 @@ ActiveAdmin.register Item do
     
     filter :name, filters: [:contains]
     filter :level, filters: [:greater_than, :less_than]
-    filter :item_class, as: :select, collection: Item.item_classes
-    filter :recipe_count
+    filter :item_class, as: :check_boxes, collection: Item.item_classes
+    filter :recipe_count, filters: [:greater_than, :equals]
 
     config.sort_order = "name_asc"
     index download_links: false do

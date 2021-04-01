@@ -6,6 +6,7 @@ ActiveAdmin.register Item do
     filter :name, filters: [:contains]
     filter :level, filters: [:greater_than, :less_than]
     filter :item_class, as: :select, collection: Item.item_classes
+    filter :recipe_count
 
     config.sort_order = "name_asc"
     index download_links: false do
@@ -14,9 +15,7 @@ ActiveAdmin.register Item do
         end
         column :item_class
         column :level
-        column "Recipes" do |item|
-            item.recipes.size
-        end
+        column :recipe_count
     end
     
     show do

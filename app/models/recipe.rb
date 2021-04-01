@@ -7,6 +7,9 @@ class Recipe < ActiveRecord::Base
     belongs_to :item
 
     validate :validate_recipe
+    before_save :update_item_recipe_count
+    before_destroy :decrement_item_recipe_count
+
     def validate_recipe
         fields = [:card1, :card2, :card3, :card4, :card5]
         if self.cards.size != 5
@@ -27,6 +30,16 @@ class Recipe < ActiveRecord::Base
         end.any? do |recipe|
             recipe.cards == self.cards
         end
+    end
+    def update_item_recipe_count
+        before_item = Item.find_by(id: changes[:item_id].first)
+        after_item = Item.find_by(id: changes[:item_id].last)
+        before_item.update!(recipe_count: before_item.recipe_count - 1) if before_item
+        after_item.update!(recipe_count: after_item.recipe_count + 1) if after_item
+        debugger
+    end
+    def decrement_item_recipe_count
+        item.update!(recipe_count: item.recipe_count - 1)
     end
 
     def cards

@@ -30,4 +30,12 @@ class Card < ActiveRecord::Base
             card5_id = ?
         ", self.id, self.id, self.id, self.id, self.id)
     end
+
+    class << self
+        def total_recipes
+            fact = lambda { |n| (1..n).inject(1, :*) } 
+            count = Card.count
+            fact.call(count) / (fact.call(count - 5) * fact.call(5))
+        end
+    end
 end

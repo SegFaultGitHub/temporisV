@@ -7,8 +7,8 @@ class Recipe < ActiveRecord::Base
     belongs_to :item
 
     validate :validate_recipe
-    before_save :update_item_recipe_count
-    before_destroy :decrement_item_recipe_count
+    before_save :update_item_card_recipe_count
+    before_destroy :decrement_item_card_recipe_count
 
     def validate_recipe
         fields = [:card1, :card2, :card3, :card4, :card5]
@@ -31,14 +31,41 @@ class Recipe < ActiveRecord::Base
             recipe.cards == self.cards
         end
     end
-    def update_item_recipe_count
-        before_item = Item.find_by(id: changes[:item_id].first)
-        after_item = Item.find_by(id: changes[:item_id].last)
-        before_item.update!(recipe_count: before_item.recipe_count - 1) if before_item
-        after_item.update!(recipe_count: after_item.recipe_count + 1) if after_item
+    def update_item_card_recipe_count
+        before = [
+            [Item, changes[:item_id]&.first],
+            [Card, changes[:card1_id]&.first],
+            [Card, changes[:card2_id]&.first],
+            [Card, changes[:card3_id]&.first],
+            [Card, changes[:card4_id]&.first],
+            [Card, changes[:card5_id]&.first],
+        ]
+        after = [
+            [Item, changes[:item_id]&.last],
+            [Card, changes[:card1_id]&.last],
+            [Card, changes[:card2_id]&.last],
+            [Card, changes[:card3_id]&.last],
+            [Card, changes[:card4_id]&.last],
+            [Card, changes[:card5_id]&.last],
+        ]
+        before.each do |model, id|
+            object = model.find_by(id: id)
+            next unless object
+            object.update!(recipe_count: object.recipe_count - 1)
+        end
+        after.each do |model, id|
+            object = model.find_by(id: id)
+            next unless object
+            object.update!(recipe_count: object.recipe_count + 1)
+        end
     end
-    def decrement_item_recipe_count
+    def decrement_item_card_recipe_count
         item.update!(recipe_count: item.recipe_count - 1)
+        card1.update!(recipe_count: card1.recipe_count - 1)
+        card2.update!(recipe_count: card2.recipe_count - 1)
+        card3.update!(recipe_count: card3.recipe_count - 1)
+        card4.update!(recipe_count: card4.recipe_count - 1)
+        card5.update!(recipe_count: card5.recipe_count - 1)
     end
 
     def cards

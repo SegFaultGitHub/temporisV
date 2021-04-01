@@ -14,21 +14,21 @@ ActiveAdmin.register_page "Dashboard" do
     panel "Derniers ajouts" do
       panel "Cartes" do
         ul do
-          Card.order('created_at DESC').first(10).each do |card|
+          Card.order('updated_at DESC').first(10).each do |card|
             li { link_to card.name, [:admin, card] }
           end
         end
       end
       panel "Items" do
         ul do
-          Item.order('created_at DESC').first(10).each do |item|
+          Item.order('updated_at DESC').first(10).each do |item|
             li { link_to item.name, [:admin, item] }
           end
         end
       end
       panel "Recettes" do
         ul do
-          Recipe.order('created_at DESC').first(10).each do |recipe|
+          Recipe.order('updated_at DESC').first(10).each do |recipe|
             li { link_to recipe.item.name, [:admin, recipe] }
           end
         end

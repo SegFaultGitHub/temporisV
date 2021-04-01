@@ -1,0 +1,43 @@
+<form action="/admin/search_recipes/search" method="get">
+    <fieldset>
+        <input type="checkbox" name="complete" <%= params[:complete] ? "checked" : "" %>>&nbsp;&nbsp;Complet</input>
+        <hr>
+        <table>
+            <tr>
+                <th>Niveau 1-50</th>
+                <th>Niveau 51-100</th>
+                <th>Niveau 101-150</th>
+                <th>Niveau 151-200</th>
+            </tr>
+            <tr>
+                <td>
+                    <% Card.where(level: (1..50)).order(:name).map do |card| %>
+                        <input type="checkbox" name="<%= card.id %>" <%= (params[:card_ids] || []).include?(card.id) ? "checked" : "" %>>&nbsp;&nbsp;<%= card.name %></input>
+                        </br>
+                    <% end %>
+                </td>
+                <td>
+                    <% Card.where(level: (51..100)).order(:name).map do |card| %>
+                        <input type="checkbox" name="<%= card.id %>" <%= (params[:card_ids] || []).include?(card.id) ? "checked" : "" %>>&nbsp;&nbsp;<%= card.name %></input>
+                        </br>
+                    <% end %>
+                </td>
+                <td>
+                    <% Card.where(level: (101..150)).order(:name).map do |card| %>
+                        <input type="checkbox" name="<%= card.id %>" <%= (params[:card_ids] || []).include?(card.id) ? "checked" : "" %>>&nbsp;&nbsp;<%= card.name %></input>
+                        </br>
+                    <% end %>
+                </td>
+                <td>
+                    <% Card.where(level: (151..200)).order(:name).map do |card| %>
+                        <input type="checkbox" name="<%= card.id %>" <%= (params[:card_ids] || []).include?(card.id) ? "checked" : "" %>>&nbsp;&nbsp;<%= card.name %></input>
+                        </br>
+                    <% end %>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <input type="submit" value="Chercher">
+        </div>
+    </fieldset>
+</form>

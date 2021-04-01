@@ -1,7 +1,7 @@
 ActiveAdmin.register_page "Search recipes" do
     content do
         panel "Qu'est ce que je peux crafter ?" do
-            div { render partial: "Test" }
+            div { render partial: "search" }
             div do
                 if params[:card_ids]
                     cards = Card.find(params[:card_ids].split(","))
@@ -15,7 +15,7 @@ ActiveAdmin.register_page "Search recipes" do
         end
     end
 
-    page_action :search, method: :post do
+    page_action :search, method: :get do
         selected_cards = Card.all.select do |card|
             !!params[card.id]
         end

@@ -5,6 +5,7 @@ ActiveAdmin.register Card do
 
     filter :name, filters: [:contains]
     filter :level, filters: [:greater_than, :less_than]
+    filter :recipe_count, filters: [:greater_than, :equals]
 
     config.sort_order = "name_asc"
     index download_links: false do
@@ -12,9 +13,7 @@ ActiveAdmin.register Card do
             link_to card.name, [:admin, card]
         end
         column :level
-        column :recipes do |card|
-            card.recipes.size
-        end
+        column :recipe_count
     end
     
     show do

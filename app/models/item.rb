@@ -25,28 +25,27 @@ class Item < ActiveRecord::Base
         def item_classes
             [
                 "Amulettes",
-                "Sac à dos",
-                "Bottes",
-                "Haches",
-                "Prysmaradites",
+                "Anneaux",
                 "Arcs",
-                "Faux",
+                "Baguettes",
+                "Bâtons",
+                "Bottes",
+                "Boucliers",
                 "Capes",
-                "Marteaux",
-                "Trophées",
-                "Épée ",
+                "Ceintures",
                 "Coiffes",
                 "Dagues",
-                "Anneaux",
-                "Baguettes",
-                "Ceintures",
-                "Boucliers",
-                "Épées",
-                "Pierres d'âmes",
-                "Bâtons",
                 "Dofus",
+                "Épées",
+                "Faux",
+                "Haches",
+                "Marteaux",
                 "Pelles",
-                "Pioches"
+                "Pierres d'âmes",
+                "Pioches",
+                "Prysmaradites",
+                "Sac à dos",
+                "Trophées"
             ]
         end
     end

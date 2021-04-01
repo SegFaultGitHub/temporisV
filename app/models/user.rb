@@ -10,9 +10,16 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, if: :password_required?
   validates_length_of       :password, within: (6..128), allow_blank: true
 
-  validate :authorized_user
-  def authorized_user
-    errors.add(:email, "#{self.email} is not authorized") unless AuthorizedUser.find_by(login: self.email.downcase)
+  belongs_to :role
+
+  def is_admin?
+    role == Role.find_by(name: "Admin")
+  end
+  def is_writer?
+    role == Role.find_by(name: "Writer")
+  end
+  def is_reader?
+    role == Role.find_by(name: "Reader")
   end
 
   protected

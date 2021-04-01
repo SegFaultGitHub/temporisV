@@ -69,7 +69,11 @@ ActiveAdmin.register Recipe do
     
     form html: { enctype: "multipart/form-data" } do |f|
         f.inputs "Details" do
-            f.input :item, collection: Item.order(:name), selected: params[:item_id]
+            if params[:item_id]
+                f.input :item, collection: Item.order(:name), selected: params[:item_id]
+            else
+                f.input :item, collection: Item.order(:name)
+            end
             f.input :card1, collection: Card.order(:name)
             f.input :card2, collection: Card.order(:name)
             f.input :card3, collection: Card.order(:name)

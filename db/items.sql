@@ -459,7 +459,7 @@ VALUES
 ('Hache de Pierre', 'Haches', 51, NOW(), NOW()),
 ('Masse Aj Taye', 'Marteaux', 51, NOW(), NOW()),
 ('Baguette des Cieux', 'Baguettes', 51, NOW(), NOW()),
-('Épée Nécronyx', 'Épée ', 50, NOW(), NOW()),
+('Épée Nécronyx', 'Épées', 50, NOW(), NOW()),
 ('Épée Glutine de Nowel', 'Épées', 50, NOW(), NOW()),
 ('Pelle de Stroud émoussée', 'Pelles', 50, NOW(), NOW()),
 ('Bâton de Karotz', 'Bâtons', 50, NOW(), NOW()),

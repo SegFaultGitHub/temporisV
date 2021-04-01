@@ -1,4 +1,5 @@
 ActiveAdmin.register Card do
+    menu priority: 2
     actions :all
     permit_params :name, :level
 

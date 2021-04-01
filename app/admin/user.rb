@@ -1,4 +1,6 @@
 ActiveAdmin.register User do
+  menu priority: 4
+
   permit_params :email, :password, :password_confirmation
 
   before_filter :skip_sidebar!, only: :index

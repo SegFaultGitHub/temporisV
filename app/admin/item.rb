@@ -6,9 +6,9 @@ ActiveAdmin.register Item do
     filter :name, filters: [:contains]
     filter :level, filters: [:greater_than, :less_than]
     filter :item_class, as: :select, collection: Item.item_classes
-    
+
     config.sort_order = "name_asc"
-    index do
+    index download_links: false do
         column "Name" do |item|
             link_to item.name, [:admin, item]
         end

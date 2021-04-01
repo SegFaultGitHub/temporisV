@@ -5,8 +5,8 @@ ActiveAdmin.register Recipe do
     permit_params :item_id, :card1_id, :card2_id, :card3_id, :card4_id, :card5_id, :quantity
 
     before_filter :skip_sidebar!, :only => :index
-    
-    index do
+
+    index download_links: false do
         column "Item" do |recipe|
             link_to recipe.item.name, [:admin, recipe]
         end

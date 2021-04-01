@@ -5,9 +5,9 @@ ActiveAdmin.register Card do
 
     filter :name, filters: [:contains]
     filter :level, filters: [:greater_than, :less_than]
-    
+
     config.sort_order = "name_asc"
-    index do
+    index download_links: false do
         column "Name" do |card|
             link_to card.name, [:admin, card]
         end

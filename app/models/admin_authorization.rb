@@ -5,8 +5,6 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
         # Retrieve subject class name
         classname = subject.is_a?(Class) ? subject.name : subject.class.name
 
-        return true if classname == "Dashboard"
-
         return true if user.is_admin?
         return false if classname == "User"
 
@@ -16,6 +14,15 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
         elsif user.is_reader?
             return true if action == :read
             return true if classname == "ActiveAdmin::Page"
+        elsif user.is_guest?
+            return false if classname == "Card"
+            return false if classname == "Recipe"
+            return false if classname == "Item"
+            if classname == "ActiveAdmin::Page"
+                return true if subject.name == "Dashboard"
+                return false
+            end
+            return true if action == :read
         end
     end
 end

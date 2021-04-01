@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   belongs_to :role
   after_initialize :set_role
   def set_role
-    self.role ||= Role.find_by(name: "Reader")
+    self.role ||= Role.find_by(name: "Guest")
   end
 
   def is_admin?
@@ -24,6 +24,9 @@ class User < ActiveRecord::Base
   end
   def is_reader?
     role == Role.find_by(name: "Reader")
+  end
+  def is_guest?
+    role == Role.find_by(name: "Guest")
   end
 
   protected

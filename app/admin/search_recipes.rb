@@ -1,6 +1,6 @@
 ActiveAdmin.register_page "Search recipes" do
     menu priority: 3
-
+    
     content do
         panel "Qu'est ce que je peux crafter ?" do
             div { render partial: "search" }

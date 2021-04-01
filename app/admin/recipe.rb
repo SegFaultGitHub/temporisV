@@ -1,4 +1,6 @@
 ActiveAdmin.register Recipe do
+    menu priority: 2
+
     actions :all
     permit_params :item_id, :card1_id, :card2_id, :card3_id, :card4_id, :card5_id, :quantity
 
@@ -74,11 +76,31 @@ ActiveAdmin.register Recipe do
             else
                 f.input :item, collection: Item.order(:name)
             end
-            f.input :card1, collection: Card.order(:name)
-            f.input :card2, collection: Card.order(:name)
-            f.input :card3, collection: Card.order(:name)
-            f.input :card4, collection: Card.order(:name)
-            f.input :card5, collection: Card.order(:name)
+            if params[:card1_id]
+                f.input :card1, collection: Card.order(:name), selected: params[:card1_id]
+            else
+                f.input :card1, collection: Card.order(:name)
+            end
+            if params[:card2_id]
+                f.input :card2, collection: Card.order(:name), selected: params[:card2_id]
+            else
+                f.input :card2, collection: Card.order(:name)
+            end
+            if params[:card3_id]
+                f.input :card3, collection: Card.order(:name), selected: params[:card3_id]
+            else
+                f.input :card3, collection: Card.order(:name)
+            end
+            if params[:card4_id]
+                f.input :card4, collection: Card.order(:name), selected: params[:card4_id]
+            else
+                f.input :card4, collection: Card.order(:name)
+            end
+            if params[:card5_id]
+                f.input :card5, collection: Card.order(:name), selected: params[:card5_id]
+            else
+                f.input :card5, collection: Card.order(:name)
+            end
             f.input :quantity, as: :number, default: 1
         end
         f.actions

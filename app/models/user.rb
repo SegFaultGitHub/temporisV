@@ -11,6 +11,10 @@ class User < ActiveRecord::Base
   validates_length_of       :password, within: (6..128), allow_blank: true
 
   belongs_to :role
+  after_initialize :set_role
+  def set_role
+    self.role ||= Role.find_by(name: "Reader")
+  end
 
   def is_admin?
     role == Role.find_by(name: "Admin")

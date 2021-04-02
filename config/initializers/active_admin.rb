@@ -9,4 +9,14 @@ ActiveAdmin.setup do |config|
   config.filter_attributes = [:encrypted_password, :password, :password_confirmation]
   config.localize_format = :long
   config.authorization_adapter = "AdminAuthorization"
+
+  
+  config.namespace :admin do |admin|
+    # priority: 1 -> "Dashboard"
+    admin.build_menu do |menu|
+      menu.add label: "Items", priority: 2
+      # priority: 3 -> "Recipes"
+      menu.add label: "Tools", priority: 4
+    end
+  end
 end

@@ -28,6 +28,10 @@ class Item < ActiveRecord::Base
         end
     end
 
+    def descriptive_name
+        "#{name} - #{item_type} Niv. #{level}"
+    end
+
     class << self
         def item_types
             {

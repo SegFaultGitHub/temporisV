@@ -8,6 +8,7 @@ class Recipe < ActiveRecord::Base
 
     validate :validate_recipe
     before_save :update_item_card_recipe_count
+    before_save :sort_cards
     before_destroy :decrement_item_card_recipe_count
 
     def validate_recipe
@@ -58,6 +59,14 @@ class Recipe < ActiveRecord::Base
             next unless object
             object.update!(recipe_count: object.recipe_count + 1)
         end
+    end
+    def sort_cards
+        sorted_cards = cards
+        self.card1 = sorted_cards[0]
+        self.card2 = sorted_cards[1]
+        self.card3 = sorted_cards[2]
+        self.card4 = sorted_cards[3]
+        self.card5 = sorted_cards[4]
     end
     def decrement_item_card_recipe_count
         item.update!(recipe_count: item.recipe_count - 1)

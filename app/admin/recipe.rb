@@ -8,9 +8,8 @@ ActiveAdmin.register Recipe do
 
     index download_links: false do
         column "Item" do |recipe|
-            link_to recipe.item.name, [:admin, recipe]
+            link_to recipe.item.descriptive_name, [:admin, recipe]
         end
-        column :quantity
         column "Card 1" do |recipe|
             link_to recipe.card1.name, [:admin, recipe.card1]
         end
@@ -26,12 +25,13 @@ ActiveAdmin.register Recipe do
         column "Card 5" do |recipe|
             link_to recipe.card5.name, [:admin, recipe.card5]
         end
+        column :quantity
     end
     
     show do
         attributes_table do
             row :item do
-                link_to resource.item.name, [:admin, resource.item]
+                link_to resource.item.descriptive_name, [:admin, resource.item]
             end
             row :quantity
             row :cards do
@@ -74,7 +74,7 @@ ActiveAdmin.register Recipe do
             items = Item.all.sort_by do |item|
                 item.name.parameterize()
             end.map do |item|
-                ["#{item.name} - #{item.item_type} Niv. #{item.level}", item.id]
+                [item.descriptive_name, item.id]
             end
             if params[:item_id]
                 f.input :item, collection: items, selected: params[:item_id]

@@ -5,7 +5,7 @@ ActiveAdmin.setup do |config|
   config.logout_link_path = :destroy_user_session_path
   config.logout_link_method = :delete
   config.comments = false
-  config.batch_actions = true
+  config.batch_actions = false
   config.filter_attributes = [:encrypted_password, :password, :password_confirmation]
   config.localize_format = :long
   config.authorization_adapter = "AdminAuthorization"

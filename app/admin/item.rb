@@ -28,23 +28,25 @@ def item_page(model, type)
                 row :item_type
                 row :level
                 row :recipes do
-                    table do
-                        tr do
-                            th { "Card 1" }
-                            th { "Card 2" }
-                            th { "Card 3" }
-                            th { "Card 4" }
-                            th { "Card 5" }
-                            th { "Quantity" }
-                        end
-                        resource.recipes.each do |recipe|
+                    unless resource.recipes.empty?
+                        table do
                             tr do
-                                td { link_to recipe.card1.name, [:admin, recipe.card1] }
-                                td { link_to recipe.card2.name, [:admin, recipe.card2] }
-                                td { link_to recipe.card3.name, [:admin, recipe.card3] }
-                                td { link_to recipe.card4.name, [:admin, recipe.card4] }
-                                td { link_to recipe.card5.name, [:admin, recipe.card5] }
-                                td { recipe.quantity }
+                                th { "Card 1" }
+                                th { "Card 2" }
+                                th { "Card 3" }
+                                th { "Card 4" }
+                                th { "Card 5" }
+                                th { "Quantity" }
+                            end
+                            resource.recipes.each do |recipe|
+                                tr do
+                                    td { link_to recipe.card1.name, [:admin, recipe.card1] }
+                                    td { link_to recipe.card2.name, [:admin, recipe.card2] }
+                                    td { link_to recipe.card3.name, [:admin, recipe.card3] }
+                                    td { link_to recipe.card4.name, [:admin, recipe.card4] }
+                                    td { link_to recipe.card5.name, [:admin, recipe.card5] }
+                                    td { recipe.quantity }
+                                end
                             end
                         end
                     end

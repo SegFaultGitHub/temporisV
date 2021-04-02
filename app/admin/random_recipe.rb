@@ -1,5 +1,5 @@
 ActiveAdmin.register_page "Random recipes" do
-    menu priority: 3
+    menu parent: "Tools"
     
     content do
         panel "Recettes inconnues aléatoires" do

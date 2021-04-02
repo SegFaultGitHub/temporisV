@@ -1,5 +1,5 @@
 ActiveAdmin.register_page "Search recipes" do
-    menu priority: 3
+    menu parent: "Tools"
     
     content do
         panel "Qu'est ce que je peux crafter ?" do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_01_220748) do
+ActiveRecord::Schema.define(version: 2021_04_02_144906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,16 +20,19 @@ ActiveRecord::Schema.define(version: 2021_04_01_220748) do
     t.integer "level", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "recipe_count", default: 0
+    t.integer "recipe_count", default: 0, null: false
+    t.index ["name"], name: "index_cards_on_name", unique: true
   end
 
   create_table "items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "item_class"
-    t.integer "level", default: 0
-    t.integer "recipe_count", default: 0
+    t.string "item_type", null: false
+    t.integer "level", default: 0, null: false
+    t.integer "recipe_count", default: 0, null: false
+    t.text "type", null: false
+    t.index ["name", "type"], name: "index_items_on_name_and_type", unique: true
   end
 
   create_table "recipes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -56,7 +59,7 @@ ActiveRecord::Schema.define(version: 2021_04_01_220748) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.uuid "role_id"
+    t.uuid "role_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

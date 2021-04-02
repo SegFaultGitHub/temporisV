@@ -1,5 +1,6 @@
 class Card < ActiveRecord::Base
     validates :name, presence: true
+    validates_uniqueness_of :name
     validates :level, :numericality => { :greater_than_or_equal_to => 1 }
 
     before_validation :truncate_name

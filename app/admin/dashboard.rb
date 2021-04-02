@@ -5,48 +5,92 @@ ActiveAdmin.register_page "Dashboard" do
         panel "Statistiques" do
             div { span { "Par " } + b { "SegFault#5814" } }
             br
-            ul do
-                li { b { "Nombre de cartes : " } + span { number_with_delimiter(Card.count, delimiter: ' ') } }
-                li { b { "Nombre d'items : " } + span { number_with_delimiter(Item.count, delimiter: ' ') } }
-                li { b { "Nombre de recettes : " } + span  { number_with_delimiter(Recipe.count, delimiter: " ") } }
+            width = 200
+            table do
+                tr do
+                    td(width: width, align: "right") { b { "Nombre de cartes" } }
+                    td { number_with_delimiter(Card.count, delimiter: ' ') }
+                end
+                tr do
+                    td(width: width, align: "right") { b { "Nombre d'équipements" } }
+                    td { number_with_delimiter(Equipment.count, delimiter: ' ') }
+                end
+                tr do
+                    td(width: width, align: "right") { b { "Nombre de consommables" } }
+                    td { number_with_delimiter(Consumable.count, delimiter: " ") }
+                end
+                tr do
+                    td(width: width, align: "right") { b { "Nombre de recettes" } }
+                    td { number_with_delimiter(Recipe.count, delimiter: ' ') }
+                end
             end
-        end
-        panel "Couverture" do
-            ul do
-                li do
-                    b { "Items avec recette : " } +
-                    span do
-                        count = Item.all.reject { |item| item.recipes.empty? }.size
-                        "#{number_with_delimiter(count, delimiter: " ")} / #{number_with_delimiter(Item.count, delimiter: ' ')} (#{(count.to_f / Item.count.to_f * 100).round(4)}%)"
+            table do
+                tr do
+                    td(width: width, align: "right") { b { "Cartes trouvées" } }
+                    td do
+                        "#{number_with_delimiter(Card.count, delimiter: " ")} / #{number_with_delimiter(642, delimiter: ' ')} (#{(Card.count.to_f / 642.0 * 100).round(4)}%)"
                     end
                 end
-                li do
-                    b { "Recettes trouvées : " } +
-                    span do
+                tr do
+                    td(width: width, align: "right") { b { "Équipements avec recette" } }
+                    td do
+                        count = Equipment.all.reject { |item| item.recipe_count == 0 }.size
+                        "#{number_with_delimiter(count, delimiter: " ")} / #{number_with_delimiter(Equipment.count, delimiter: ' ')} (#{(count.to_f / Equipment.count.to_f * 100).round(4)}%)"
+                    end
+                end
+                tr do
+                    td(width: width, align: "right") { b { "Consommables avec recette" } }
+                    td do
+                        count = Consumable.all.reject { |item| item.recipe_count == 0 }.size
+                        "#{number_with_delimiter(count, delimiter: " ")} / #{number_with_delimiter(Consumable.count, delimiter: ' ')} (#{(count.to_f / Consumable.count.to_f * 100).round(4)}%)"
+                    end
+                end
+                tr do
+                    td(width: width, align: "right") { b { "Recettes trouvées" } }
+                    td do
                         "#{number_with_delimiter(Recipe.count, delimiter: " ")} / #{number_with_delimiter(Card.total_recipes, delimiter: ' ')} (#{(Recipe.count.to_f / Card.total_recipes.to_f * 100).round(4)}%)"
                     end
                 end
             end
         end
         panel "Derniers ajouts" do
-            panel "Cartes" do
-                ul do
-                    Card.order('updated_at DESC').first(10).each do |card|
-                        li { link_to card.name, [:admin, card] }
+            table do
+                tr do
+                    td do
+                        panel(link_to "Cartes", admin_cards_path) do
+                            ul do
+                                Card.order('updated_at DESC').first(10).each do |card|
+                                    li { link_to card.name, [:admin, card] }
+                                end
+                            end
+                        end
                     end
-                end
-            end
-            panel "Items" do
-                ul do
-                    Item.order('updated_at DESC').first(10).each do |item|
-                        li { link_to item.name, [:admin, item] }
+                    td do
+                        panel(link_to "Equipement", admin_cards_path) do
+                            ul do
+                                Equipment.order('updated_at DESC').first(10).each do |equipment|
+                                    li { link_to equipment.name, [:admin, equipment] }
+                                end
+                            end
+                        end
                     end
-                end
-            end
-            panel "Recettes" do
-                ul do
-                    Recipe.order('updated_at DESC').first(10).each do |recipe|
-                        li { link_to recipe.item.name, [:admin, recipe] }
+                    td do
+                        panel(link_to "Consommables", admin_cards_path) do
+                            ul do
+                                Consumable.order('updated_at DESC').first(10).each do |consumable|
+                                    li { link_to consumable.name, [:admin, consumable] }
+                                end
+                            end
+                        end
+                    end
+                    td do
+                        panel(link_to "Recettes", admin_cards_path) do
+                            ul do
+                                Recipe.order('updated_at DESC').first(10).each do |recipe|
+                                    li { link_to recipe.item.name, [:admin, recipe] }
+                                end
+                            end
+                        end
                     end
                 end
             end

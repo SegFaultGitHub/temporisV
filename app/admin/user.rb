@@ -3,7 +3,7 @@ ActiveAdmin.register User do
 
   permit_params :email, :password, :password_confirmation, :role_id
 
-  before_filter :skip_sidebar!, only: :index
+  filter :role
 
   index do
     column :email

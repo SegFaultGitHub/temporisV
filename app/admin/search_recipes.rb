@@ -29,37 +29,18 @@ ActiveAdmin.register_page "Search recipes" do
 end
 
 def find_recipe_complete(cards)
-    recipes = Recipe.select do |recipe|
+    table_for_recipes(cards, Recipe.select do |recipe|
         recipe.cards.all? { |card| cards.include? card }
-    end
-    table do
-        tr do
-            th { "Item" }
-            th { "Card 1" }
-            th { "Card 2" }
-            th { "Card 3" }
-            th { "Card 4" }
-            th { "Card 5" }
-        end
-        recipes.each do |recipe|
-            tr do
-                td { link_to recipe.item.name, [:admin, recipe.item] }
-                [recipe.card1, recipe.card2, recipe.card3, recipe.card4, recipe.card5].each do |card|
-                    if cards.include? card
-                        td { link_to card.name, [:admin, card] }
-                    else
-                        td { s { link_to card.name, [:admin, card] } }
-                    end
-                end
-            end
-        end
-    end
+    end)    
 end
 
 def find_recipe_partial(cards)
-    recipes = Recipe.select do |recipe|
+    table_for_recipes(cards, Recipe.select do |recipe|
         recipe.cards.any? { |card| cards.include? card }
-    end
+    end)
+end
+
+def table_for_recipes(cards, recipes)
     table do
         tr do
             th { "Item" }

@@ -71,10 +71,15 @@ ActiveAdmin.register Recipe do
     
     form html: { enctype: "multipart/form-data" } do |f|
         f.inputs "Details" do
+            items = Item.all.sort_by do |item|
+                item.name.parameterize()
+            end.map do |item|
+                ["#{item.name} - #{item.item_type} Niv. #{item.level}", item.id]
+            end
             if params[:item_id]
-                f.input :item, collection: Item.order(:name), selected: params[:item_id]
+                f.input :item, collection: items, selected: params[:item_id]
             else
-                f.input :item, collection: Item.order(:name)
+                f.input :item, collection: items
             end
             if params[:card1_id]
                 f.input :card1, collection: Card.order(:name), selected: params[:card1_id]

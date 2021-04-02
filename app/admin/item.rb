@@ -17,6 +17,9 @@ def item_page(model, type)
             column :item_type
             column :level
             column :recipe_count
+            column "Add recipe" do |item|
+                link_to "Ajouter une recette", "/admin/recipes/new?item_id=#{item.id}", class: "button_to"
+            end
         end
         
         show do

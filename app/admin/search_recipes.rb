@@ -68,6 +68,7 @@ def find_recipe_partial(cards)
             th { "Card 3" }
             th { "Card 4" }
             th { "Card 5" }
+            th { "Quantity" }
         end
         recipes.each do |recipe|
             tr do
@@ -79,6 +80,7 @@ def find_recipe_partial(cards)
                         td { s { link_to card.name, [:admin, card] } }
                     end
                 end
+                td { recipe.quantity }
             end
         end
     end

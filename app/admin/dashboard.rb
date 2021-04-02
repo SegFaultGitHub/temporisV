@@ -2,7 +2,7 @@ ActiveAdmin.register_page "Dashboard" do
     menu priority: 1
     
     content do
-        panel "Statistiques" do
+        panel("Statistiques") do
             div { span { "Par " } + b { "SegFault#5814" } }
             br
             width = 200
@@ -66,7 +66,7 @@ ActiveAdmin.register_page "Dashboard" do
                         end
                     end
                     td do
-                        panel(link_to "Equipement", admin_cards_path) do
+                        panel(link_to "Equipement", admin_equipment_index_path) do
                             ul do
                                 Equipment.order('updated_at DESC').first(10).each do |equipment|
                                     li { link_to equipment.name, [:admin, equipment] }
@@ -75,7 +75,7 @@ ActiveAdmin.register_page "Dashboard" do
                         end
                     end
                     td do
-                        panel(link_to "Consommables", admin_cards_path) do
+                        panel(link_to "Consommables", admin_consumables_path) do
                             ul do
                                 Consumable.order('updated_at DESC').first(10).each do |consumable|
                                     li { link_to consumable.name, [:admin, consumable] }
@@ -84,7 +84,7 @@ ActiveAdmin.register_page "Dashboard" do
                         end
                     end
                     td do
-                        panel(link_to "Recettes", admin_cards_path) do
+                        panel(link_to "Recettes", admin_recipes_path) do
                             ul do
                                 Recipe.order('updated_at DESC').first(10).each do |recipe|
                                     li { link_to recipe.item.name, [:admin, recipe] }

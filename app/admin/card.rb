@@ -21,9 +21,28 @@ ActiveAdmin.register Card do
             row :name
             row :level
             row :recipes do
-                ul do
-                    resource.recipes.each do |recipe|
-                        li { link_to recipe.item.name, [:admin, recipe] }
+                unless resource.recipes.empty?
+                    table do
+                        tr do
+                            th { "Item" }
+                            th { "Card 1" }
+                            th { "Card 2" }
+                            th { "Card 3" }
+                            th { "Card 4" }
+                            th { "Card 5" }
+                            th { "Quantity" }
+                        end
+                        resource.recipes.each do |recipe|
+                            tr do
+                                td { link_to recipe.item.name,  [:admin, recipe.item] }
+                                td { link_to recipe.card1.name, [:admin, recipe.card1] }
+                                td { link_to recipe.card2.name, [:admin, recipe.card2] }
+                                td { link_to recipe.card3.name, [:admin, recipe.card3] }
+                                td { link_to recipe.card4.name, [:admin, recipe.card4] }
+                                td { link_to recipe.card5.name, [:admin, recipe.card5] }
+                                td { recipe.quantity }
+                            end
+                        end
                     end
                 end
             end

@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   menu priority: 99
 
-  permit_params :email, :password, :password_confirmation, :role_id
+  permit_params :email, :password, :password_confirmation, :role_id, :special_invitee
 
   filter :role
 
@@ -9,6 +9,7 @@ ActiveAdmin.register User do
     column :email
     column :created_at
     column :role
+    column :special_invitee
     actions
   end
 
@@ -16,6 +17,7 @@ ActiveAdmin.register User do
     attributes_table do
       row :email
       row :role
+      row :special_invitee
     end
   end
 
@@ -23,6 +25,7 @@ ActiveAdmin.register User do
     f.inputs do
       f.input :email
       f.input :role, collection: Role.order(:name), include_blank: false
+      f.input :special_invitee
     end
     f.actions
   end

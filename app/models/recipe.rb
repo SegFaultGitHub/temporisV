@@ -24,13 +24,6 @@ class Recipe < ActiveRecord::Base
             end
             errored_fields.each { |field| errors.add(field, "All cards must be distinct") }
         end
-        fields.each do |field|
-            errors.add(field, "Duplicate recipe")
-        end if Recipe.select do |recipe|
-            recipe.id != self.id
-        end.any? do |recipe|
-            recipe.cards == self.cards
-        end
     end
     def update_item_card_recipe_count
         before = [
@@ -79,5 +72,14 @@ class Recipe < ActiveRecord::Base
 
     def cards
         [card1, card2, card3, card4, card5].compact.uniq.sort_by(&:name)
+    end
+
+    def save
+        super()
+    rescue ActiveRecord::RecordNotUnique => e
+        fields = [:card1, :card2, :card3, :card4, :card5]
+        fields.each do |field|
+            errors.add(field, "Duplicate recipe")
+        end
     end
 end

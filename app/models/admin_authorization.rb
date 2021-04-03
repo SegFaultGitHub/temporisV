@@ -7,23 +7,27 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
 
         return true if user.is_admin?
         return false if classname == "User"
+        return true if classname == "ActiveAdmin::Page" and subject.name == "Dashboard"
 
         if user.is_writer?
+            if classname == "ActiveAdmin::Page"
+                return user.is_special_invitee? if action.in? [:create, :read, :update, :destroy]
+                return false
+            end
             return true if action.in? [:create, :read, :update, :destroy]
-            return true if classname == "ActiveAdmin::Page"
         elsif user.is_reader?
+            if classname == "ActiveAdmin::Page"
+                return user.is_special_invitee? if action == :read
+                return false
+            end
             return true if action == :read
-            return true if classname == "ActiveAdmin::Page"
         elsif user.is_guest?
             return false if classname == "Card"
             return false if classname == "Recipe"
             return false if classname == "LevelUpCard"
             return false if classname == "Consumable"
             return false if classname == "Equipment"
-            if classname == "ActiveAdmin::Page"
-                return true if subject.name == "Dashboard"
-                return false
-            end
+            return false if classname == "ActiveAdmin::Page"
             return true if action == :read
         end
     end

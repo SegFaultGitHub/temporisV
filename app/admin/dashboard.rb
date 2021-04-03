@@ -8,7 +8,7 @@ ActiveAdmin.register_page "Dashboard" do
             width = 200
             table do
                 tr do
-                    td(width: width, align: "right") { b { "Nombre d'inscrits'" } }
+                    td(width: width, align: "right") { b { "Nombre d'inscrits" } }
                     td { number_with_delimiter(User.count, delimiter: ' ') }
                 end
             end
@@ -72,7 +72,7 @@ ActiveAdmin.register_page "Dashboard" do
                         end
                     end
                     td do
-                        panel(link_to "Equipement", admin_equipment_index_path) do
+                        panel(link_to "Équipements", admin_equipment_index_path) do
                             ul do
                                 Equipment.order('updated_at DESC').first(10).each do |equipment|
                                     li { link_to equipment.name, [:admin, equipment] }

@@ -8,6 +8,12 @@ ActiveAdmin.register_page "Dashboard" do
             width = 200
             table do
                 tr do
+                    td(width: width, align: "right") { b { "Nombre d'inscrits'" } }
+                    td { number_with_delimiter(User.count, delimiter: ' ') }
+                end
+            end
+            table do
+                tr do
                     td(width: width, align: "right") { b { "Nombre de cartes" } }
                     td { number_with_delimiter(Card.count, delimiter: ' ') }
                 end

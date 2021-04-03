@@ -41,7 +41,11 @@ ActiveAdmin.register LevelUpCard do
     
     form html: { enctype: "multipart/form-data" } do |f|
         f.inputs "Details" do
-            f.input :card, collection: Card.all
+            if params[:card_id]
+                f.input :card, collection: Card.order(:name), selected: params[:card_id]
+            else
+                f.input :card, collection: Card.order(:name)
+            end
             f.input :level, as: :number
         end
         f.actions

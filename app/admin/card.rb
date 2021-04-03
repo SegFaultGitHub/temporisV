@@ -54,6 +54,9 @@ ActiveAdmin.register Card do
                 end
             end
         end
+        panel "" do
+            button_to "Ajouter une carte de montée de niveau", "/admin/level_up_cards/new", method: :get, params: { card_id: resource.id }
+        end unless resource.level_up_card
     end
     
     controller do

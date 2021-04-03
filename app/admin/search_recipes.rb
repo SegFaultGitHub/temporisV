@@ -41,6 +41,10 @@ def find_recipe_partial(cards)
 end
 
 def table_for_recipes(cards, recipes)
+    span do
+        b { number_with_delimiter(recipes.count, delimiter: ' ') }
+        span { " recettes trouvées" }
+    end
     table do
         tr do
             th { "Item" }

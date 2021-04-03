@@ -87,7 +87,7 @@ ActiveAdmin.register_page "Dashboard" do
                         panel(link_to "Recettes", admin_recipes_path) do
                             ul do
                                 Recipe.order('updated_at DESC').first(10).each do |recipe|
-                                    li { link_to recipe.item.name, [:admin, recipe] }
+                                    li { link_to recipe.item.descriptive_name, [:admin, recipe] }
                                 end
                             end
                         end

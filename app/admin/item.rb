@@ -1,6 +1,7 @@
 def item_page(model, type)
     ActiveAdmin.register model do
         menu parent: "Items"
+
         actions :all
         permit_params :name, :item_type, :level
         

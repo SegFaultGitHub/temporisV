@@ -17,7 +17,9 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
         elsif user.is_guest?
             return false if classname == "Card"
             return false if classname == "Recipe"
-            return false if classname == "Item"
+            return false if classname == "LevelUpCard"
+            return false if classname == "Consumable"
+            return false if classname == "Equipment"
             if classname == "ActiveAdmin::Page"
                 return true if subject.name == "Dashboard"
                 return false

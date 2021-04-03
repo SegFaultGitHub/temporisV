@@ -1,5 +1,6 @@
 ActiveAdmin.register Card do
     menu parent: "Items"
+
     actions :all
     permit_params :name, :level
 
@@ -14,12 +15,18 @@ ActiveAdmin.register Card do
         end
         column :level
         column :recipe_count
+        column "Level-up Card" do |card|
+            "#{card.level_up_card.level - 1} ➜ #{card.level_up_card.level}" if card.level_up_card
+        end
     end
     
     show do
         attributes_table do
             row :name
             row :level
+            row :level_up_card do
+                "#{resource.level_up_card.level - 1} ➜ #{resource.level_up_card.level}"
+            end if resource.level_up_card
             row :recipes do
                 unless resource.recipes.empty?
                     table do

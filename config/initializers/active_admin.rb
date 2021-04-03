@@ -10,12 +10,11 @@ ActiveAdmin.setup do |config|
   config.localize_format = :long
   config.authorization_adapter = "AdminAuthorization"
 
-  
   config.namespace :admin do |admin|
     # priority: 1 -> "Dashboard"
     admin.build_menu do |menu|
       menu.add label: "Items", priority: 2
-      # priority: 3 -> "Recipes"
+      # priority: 3 -> "Recipes", "Level up Cards"
       menu.add label: "Tools", priority: 4
     end
   end

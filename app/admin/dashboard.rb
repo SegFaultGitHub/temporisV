@@ -100,6 +100,19 @@ ActiveAdmin.register_page "Dashboard" do
                     end
                 end
             end
+            table do
+                tr do
+                    td do
+                        panel(link_to "Utilisateurs", admin_users_path) do
+                            ul do
+                                User.order('created_at DESC').first(10).each do |user|
+                                    li { link_to user.email, [:admin, user] }
+                                end
+                            end
+                        end
+                    end
+                end
+            end if current_user.is_admin?
         end
     end
 end

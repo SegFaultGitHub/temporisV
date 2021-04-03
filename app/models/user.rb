@@ -28,6 +28,9 @@ class User < ActiveRecord::Base
   def is_guest?
     role == Role.find_by(name: "Guest")
   end
+  def is_special_invitee?
+    special_invitee
+  end
 
   protected
 

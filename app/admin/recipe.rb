@@ -4,7 +4,8 @@ ActiveAdmin.register Recipe do
     actions :all
     permit_params :item_id, :card1_id, :card2_id, :card3_id, :card4_id, :card5_id, :quantity
 
-    before_filter :skip_sidebar!, :only => :index
+    before_filter :skip_sidebar!, only: :index
+    config.sort_order = "updated_at_desc"
 
     index download_links: false do
         column "Item" do |recipe|
@@ -77,32 +78,32 @@ ActiveAdmin.register Recipe do
                 [item.descriptive_name, item.id]
             end
             if params[:item_id]
-                f.input :item, collection: items, selected: params[:item_id]
+                f.input :item, collection: items, selected: params[:item_id], input_html: { disabled: true }
             else
                 f.input :item, collection: items
             end
             if params[:card1_id]
-                f.input :card1, collection: Card.order(:name), selected: params[:card1_id]
+                f.input :card1, collection: Card.order(:name), selected: params[:card1_id], input_html: { disabled: true }
             else
                 f.input :card1, collection: Card.order(:name)
             end
             if params[:card2_id]
-                f.input :card2, collection: Card.order(:name), selected: params[:card2_id]
+                f.input :card2, collection: Card.order(:name), selected: params[:card2_id], input_html: { disabled: true }
             else
                 f.input :card2, collection: Card.order(:name)
             end
             if params[:card3_id]
-                f.input :card3, collection: Card.order(:name), selected: params[:card3_id]
+                f.input :card3, collection: Card.order(:name), selected: params[:card3_id], input_html: { disabled: true }
             else
                 f.input :card3, collection: Card.order(:name)
             end
             if params[:card4_id]
-                f.input :card4, collection: Card.order(:name), selected: params[:card4_id]
+                f.input :card4, collection: Card.order(:name), selected: params[:card4_id], input_html: { disabled: true }
             else
                 f.input :card4, collection: Card.order(:name)
             end
             if params[:card5_id]
-                f.input :card5, collection: Card.order(:name), selected: params[:card5_id]
+                f.input :card5, collection: Card.order(:name), selected: params[:card5_id], input_html: { disabled: true }
             else
                 f.input :card5, collection: Card.order(:name)
             end

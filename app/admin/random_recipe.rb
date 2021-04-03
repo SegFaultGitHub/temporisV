@@ -7,10 +7,16 @@ ActiveAdmin.register_page "Random recipes" do
             all_cards = Card.all
             if all_cards.size >= 5
                 recipes = []
-                while recipes.size < 10
+                while recipes.size < 20
                     break if count >= 10
                     selected_cards = all_cards.sample(5).sort_by(&:name)
-                    recipe_exists = Recipe.any? { |r| r.cards == selected_cards }
+                    recipe_exists = Recipe.where(
+                        card1: selected_cards[0],
+                        card2: selected_cards[1],
+                        card3: selected_cards[2],
+                        card4: selected_cards[3],
+                        card5: selected_cards[4]
+                    ).exists?
                     if !recipe_exists and !selected_cards.in? recipes
                         recipes.push(selected_cards)
                         count = 0

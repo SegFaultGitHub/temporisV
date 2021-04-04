@@ -61,58 +61,83 @@ ActiveAdmin.register_page "Dashboard" do
         end
         panel "Derniers ajouts" do
             table do
-                tr do
-                    td do
-                        panel(link_to "Cartes", admin_cards_path) do
-                            ul do
-                                Card.order('updated_at DESC').first(10).each do |card|
-                                    li { link_to card.name, [:admin, card] }
-                                end
-                            end
+                td do
+                    table class: :index_table do
+                        thead do
+                            th { link_to "Cartes", admin_cards_path }
                         end
-                    end
-                    td do
-                        panel(link_to "Équipements", admin_equipment_index_path) do
-                            ul do
-                                Equipment.order('updated_at DESC').first(10).each do |equipment|
-                                    li { link_to equipment.name, [:admin, equipment] }
-                                end
-                            end
-                        end
-                    end
-                    td do
-                        panel(link_to "Consommables", admin_consumables_path) do
-                            ul do
-                                Consumable.order('updated_at DESC').first(10).each do |consumable|
-                                    li { link_to consumable.name, [:admin, consumable] }
-                                end
-                            end
-                        end
-                    end
-                    td do
-                        panel(link_to "Recettes", admin_recipes_path) do
-                            ul do
-                                Recipe.order('updated_at DESC').first(10).each do |recipe|
-                                    li { link_to recipe.item.descriptive_name, [:admin, recipe] }
-                                end
+                        tbody do
+                            even = false
+                            Card.order('updated_at DESC').first(10).each do |card|
+                                tr(class: even ? :even : nil) { td { link_to card.name, [:admin, card] } }
+                                even = !even
                             end
                         end
                     end
                 end
+                td do
+                    table class: :index_table do
+                        thead do
+                            th { link_to "Équipements", admin_equipment_index_path }
+                        end
+                        tbody do
+                            even = false
+                            Equipment.order('updated_at DESC').first(10).each do |equipment|
+                                tr(class: even ? :even : nil) { td { link_to equipment.name, [:admin, equipment] } }
+                                even = !even
+                            end
+                        end
+                    end
+                end
+                td do
+                    table class: :index_table do
+                        thead do
+                            th { link_to "Consommables", admin_consumables_path }
+                        end
+                        tbody do
+                            even = false
+                            Consumable.order('updated_at DESC').first(10).each do |consumable|
+                                tr(class: even ? :even : nil) { td { link_to consumable.name, [:admin, consumable] } }
+                                even = !even
+                            end
+                        end
+                    end
+                end
+                td do
+                    table class: :index_table do
+                        thead do
+                            th { link_to "Recette", admin_recipes_path }
+                            th {}
+                        end
+                        tbody do
+                            even = false
+                            Recipe.order('updated_at DESC').first(10).each do |recipe|
+                                tr(class: even ? :even : nil) do
+                                    td { link_to recipe.item.name, [:admin, recipe] }
+                                    td { recipe.item.descriptive_type }
+                                end
+                                even = !even
+                            end
+                        end
+                    end
+                end
+                td do
+                    table class: :index_table do
+                        thead do
+                            th { link_to "Utilisateurs", admin_users_path }
+                        end
+                        tbody do
+                            even = false
+                            User.order('created_at DESC').first(10).each do |user|
+                                tr(class: even ? :even : nil) do
+                                    td { link_to user.email, [:admin, user] }
+                                    even = !even
+                                end
+                            end
+                        end
+                    end
+                end if current_user.is_admin?
             end
-            table do
-                tr do
-                    td do
-                        panel(link_to "Utilisateurs", admin_users_path) do
-                            ul do
-                                User.order('created_at DESC').first(10).each do |user|
-                                    li { link_to user.email, [:admin, user] }
-                                end
-                            end
-                        end
-                    end
-                end
-            end if current_user.is_admin?
         end
     end
 end

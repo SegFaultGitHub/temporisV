@@ -36,15 +36,15 @@ ActiveAdmin.register Recipe do
             end
             row :quantity
             row :cards do
-                table do
-                    tr do
+                table class: :index_table do
+                    thead do
                         th { "Card 1" }
                         th { "Card 2" }
                         th { "Card 3" }
                         th { "Card 4" }
                         th { "Card 5" }
                     end
-                    tr do
+                    tbody do
                         td { link_to resource.card1.name, [:admin, resource.card1] }
                         td { link_to resource.card2.name, [:admin, resource.card2] }
                         td { link_to resource.card3.name, [:admin, resource.card3] }
@@ -78,32 +78,32 @@ ActiveAdmin.register Recipe do
                 [item.descriptive_name, item.id]
             end
             if params[:item_id]
-                f.input :item, collection: items, selected: params[:item_id], input_html: { disabled: true }
+                f.input :item, collection: items, selected: params[:item_id]
             else
                 f.input :item, collection: items
             end
             if params[:card1_id]
-                f.input :card1, collection: Card.order(:name), selected: params[:card1_id], input_html: { disabled: true }
+                f.input :card1, collection: Card.order(:name), selected: params[:card1_id]
             else
                 f.input :card1, collection: Card.order(:name)
             end
             if params[:card2_id]
-                f.input :card2, collection: Card.order(:name), selected: params[:card2_id], input_html: { disabled: true }
+                f.input :card2, collection: Card.order(:name), selected: params[:card2_id]
             else
                 f.input :card2, collection: Card.order(:name)
             end
             if params[:card3_id]
-                f.input :card3, collection: Card.order(:name), selected: params[:card3_id], input_html: { disabled: true }
+                f.input :card3, collection: Card.order(:name), selected: params[:card3_id]
             else
                 f.input :card3, collection: Card.order(:name)
             end
             if params[:card4_id]
-                f.input :card4, collection: Card.order(:name), selected: params[:card4_id], input_html: { disabled: true }
+                f.input :card4, collection: Card.order(:name), selected: params[:card4_id]
             else
                 f.input :card4, collection: Card.order(:name)
             end
             if params[:card5_id]
-                f.input :card5, collection: Card.order(:name), selected: params[:card5_id], input_html: { disabled: true }
+                f.input :card5, collection: Card.order(:name), selected: params[:card5_id]
             else
                 f.input :card5, collection: Card.order(:name)
             end

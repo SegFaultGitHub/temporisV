@@ -1,7 +1,8 @@
 ActiveAdmin.register LevelUpCard do
     menu priority: 2
     
-    actions :all
+    actions :all, except: [:show]
+
     permit_params :card_id, :level
     
     filter :name, filters: [:contains]
@@ -16,13 +17,7 @@ ActiveAdmin.register LevelUpCard do
         column :level do
             |level_up_card| "#{level_up_card.level - 1} ➜ #{level_up_card.level}"
         end
-    end
-    
-    show do
-        attributes_table do
-            row :card
-            row :level
-        end
+        actions
     end
     
     controller do

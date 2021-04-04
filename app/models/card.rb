@@ -3,7 +3,7 @@ class Card < ActiveRecord::Base
     validates_uniqueness_of :name
     validates :level, numericality: { :greater_than_or_equal_to => 1 }
 
-    has_one :level_up_card
+    has_one :level_up_card, :dependent => :destroy
 
     before_validation :truncate_name
     def truncate_name

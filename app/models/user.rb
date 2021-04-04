@@ -6,12 +6,17 @@ class User < ActiveRecord::Base
 
   validates_presence_of   :email
   validates_uniqueness_of :email
+  validate                :email_without_at
   validates_presence_of     :password, if: :password_required?
   validates_confirmation_of :password, if: :password_required?
   validates_length_of       :password, within: (6..128), allow_blank: true
 
   belongs_to :role
   after_initialize :set_role
+
+  def email_without_at
+    errors.add(:email, "can not contain '@'") if email.include? "@"
+  end
   def set_role
     self.role ||= Role.find_by(name: "Guest")
   end

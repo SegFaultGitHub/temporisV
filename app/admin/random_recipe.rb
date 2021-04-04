@@ -24,29 +24,35 @@ ActiveAdmin.register_page "Random recipes" do
                         count += 1
                     end
                 end
-                table do
-                    tr do
-                        th { "Card 1" }
-                        th { "Card 2" }
-                        th { "Card 3" }
-                        th { "Card 4" }
-                        th { "Card 5" }
-                        th {} if (current_user.is_admin? || current_user.is_writer?)
-                    end
-                    recipes.each do |recipe|
+                table class: :index_table do
+                    thead do
                         tr do
-                            recipe.each do |card|
-                                td { link_to card.name, [:admin, card] }
+                            th(class: "col col-name") { "Card 1" }
+                            th { "Card 2" }
+                            th { "Card 3" }
+                            th { "Card 4" }
+                            th { "Card 5" }
+                            th {} if (current_user.is_admin? || current_user.is_writer?)
+                        end
+                    end
+                    tbody do
+                        even = false
+                        recipes.each do |recipe|
+                            tr(class: even ? :even : nil) do
+                                recipe.each do |card|
+                                    td { link_to card.name, [:admin, card] }
+                                end
+                                td do
+                                    button_to "Ajouter une recette", "/admin/recipes/new", method: :get, params: {
+                                        card1_id: recipe[0],
+                                        card2_id: recipe[1],
+                                        card3_id: recipe[2],
+                                        card4_id: recipe[3],
+                                        card5_id: recipe[4]
+                                    }
+                                end if (current_user.is_admin? || current_user.is_writer?)
                             end
-                            td do
-                                button_to "Ajouter une recette", "/admin/recipes/new", method: :get, params: {
-                                    card1_id: recipe[0],
-                                    card2_id: recipe[1],
-                                    card3_id: recipe[2],
-                                    card4_id: recipe[3],
-                                    card5_id: recipe[4]
-                                }
-                            end if (current_user.is_admin? || current_user.is_writer?)
+                            even = !even
                         end
                     end
                 end

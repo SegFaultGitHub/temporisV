@@ -73,6 +73,9 @@ class Recipe < ActiveRecord::Base
     def cards
         [card1, card2, card3, card4, card5].compact.uniq.sort_by(&:name)
     end
+    def card_ids
+        [card1_id, card2_id, card3_id, card4_id, card5_id]
+    end
 
     def save
         super()

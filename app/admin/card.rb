@@ -29,9 +29,10 @@ ActiveAdmin.register Card do
             end if resource.level_up_card
             row :recipes do
                 unless resource.recipes.empty?
-                    table do
-                        tr do
+                    table class: :index_table do
+                        thead do
                             th { "Item" }
+                            th { "Type" }
                             th { "Card 1" }
                             th { "Card 2" }
                             th { "Card 3" }
@@ -39,15 +40,22 @@ ActiveAdmin.register Card do
                             th { "Card 5" }
                             th { "Quantity" }
                         end
-                        resource.recipes.each do |recipe|
-                            tr do
-                                td { link_to recipe.item.name,  [:admin, recipe.item] }
-                                td { link_to recipe.card1.name, [:admin, recipe.card1] }
-                                td { link_to recipe.card2.name, [:admin, recipe.card2] }
-                                td { link_to recipe.card3.name, [:admin, recipe.card3] }
-                                td { link_to recipe.card4.name, [:admin, recipe.card4] }
-                                td { link_to recipe.card5.name, [:admin, recipe.card5] }
-                                td { recipe.quantity }
+                        tbody do
+                            even = false
+                            resource.recipes.each do |recipe|
+                                tr(class: even ? :even : nil) do
+                                    td { link_to recipe.item.name,  [:admin, recipe.item] }
+                                    td { recipe.item.descriptive_type }
+                                    recipe.cards.each do |card|
+                                        if (card.id == resource.id)
+                                            td { b { link_to card.name, [:admin, card] } }
+                                        else
+                                            td { link_to card.name, [:admin, card] }
+                                        end
+                                    end
+                                    td { recipe.quantity }
+                                end
+                                even = !even
                             end
                         end
                     end

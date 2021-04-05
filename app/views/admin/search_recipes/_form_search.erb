@@ -1,0 +1,28 @@
+<form action="/admin/search_recipes/search" method="get">
+    <fieldset>
+        <table class="index_table">
+            <thead>
+                <th>Niveau 1-40</th>
+                <th>Niveau 41-80</th>
+                <th>Niveau 81-120</th>
+                <th>Niveau 121-160</th>
+                <th>Niveau 161-200</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <% [(1..40), (41..80), (81..120), (121..160), (161..200)].each do |range| %>
+                    <td>
+                        <% Card.where(level: range).order(:name).map do |card| %>
+                            <input type="checkbox" name="<%= card.id %>" <%= (params[:card_ids] || []).include?(card.id) ? "checked" : "" %>>&nbsp;&nbsp;<%= card.name %></input>
+                            </br>
+                        <% end %>
+                    </td>
+                    <% end %>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <input type="submit" value="Chercher">
+        </div>
+    </fieldset>
+</form>

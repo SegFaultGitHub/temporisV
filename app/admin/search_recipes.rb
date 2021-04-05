@@ -3,7 +3,7 @@ ActiveAdmin.register_page "Search recipes" do
     
     content do
         panel "Qu'est ce que je peux crafter ?" do
-            div { render partial: "search" }
+            div { render partial: "form_search" }
             div do
                 if params[:card_ids]
                     card_ids = Card.find(params[:card_ids].split(",")).pluck(:id)

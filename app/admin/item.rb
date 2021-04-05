@@ -79,7 +79,7 @@ def item_page(model, type)
         form html: { enctype: "multipart/form-data" } do |f|
             f.inputs "Details" do
                 f.input :name, as: :string
-                f.input :item_type, collection: Item.item_types[type]
+                f.input :item_type, collection: Item.item_types[type], input_html: { class: "select2" }
                 f.input :level, as: :number
             end
             f.actions

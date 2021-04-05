@@ -78,34 +78,34 @@ ActiveAdmin.register Recipe do
                 [item.descriptive_name, item.id]
             end
             if params[:item_id]
-                f.input :item, collection: items, selected: params[:item_id]
+                f.input :item, collection: items, selected: params[:item_id], input_html: { class: "select2" }
             else
-                f.input :item, collection: items
+                f.input :item, collection: items, input_html: { class: "select2" }
             end
             if params[:card1_id]
-                f.input :card1, collection: Card.order(:name), selected: params[:card1_id]
+                f.input :card1, collection: Card.order(:name), selected: params[:card1_id], input_html: { class: "select2" }
             else
-                f.input :card1, collection: Card.order(:name)
+                f.input :card1, collection: Card.order(:name), input_html: { class: "select2" }
             end
             if params[:card2_id]
-                f.input :card2, collection: Card.order(:name), selected: params[:card2_id]
+                f.input :card2, collection: Card.order(:name), selected: params[:card2_id], input_html: { class: "select2" }
             else
-                f.input :card2, collection: Card.order(:name)
+                f.input :card2, collection: Card.order(:name), input_html: { class: "select2" }
             end
             if params[:card3_id]
-                f.input :card3, collection: Card.order(:name), selected: params[:card3_id]
+                f.input :card3, collection: Card.order(:name), selected: params[:card3_id], input_html: { class: "select2" }
             else
-                f.input :card3, collection: Card.order(:name)
+                f.input :card3, collection: Card.order(:name), input_html: { class: "select2" }
             end
             if params[:card4_id]
-                f.input :card4, collection: Card.order(:name), selected: params[:card4_id]
+                f.input :card4, collection: Card.order(:name), selected: params[:card4_id], input_html: { class: "select2" }
             else
-                f.input :card4, collection: Card.order(:name)
+                f.input :card4, collection: Card.order(:name), input_html: { class: "select2" }
             end
             if params[:card5_id]
-                f.input :card5, collection: Card.order(:name), selected: params[:card5_id]
+                f.input :card5, collection: Card.order(:name), selected: params[:card5_id], input_html: { class: "select2" }
             else
-                f.input :card5, collection: Card.order(:name)
+                f.input :card5, collection: Card.order(:name), input_html: { class: "select2" }
             end
             f.input :quantity, as: :number, default: 1
         end

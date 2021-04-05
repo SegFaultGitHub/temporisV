@@ -9,16 +9,23 @@
                 <th>Niveau 161-200</th>
             </thead>
             <tbody>
-                <tr>
-                    <% [(1..40), (41..80), (81..120), (121..160), (161..200)].each do |range| %>
-                    <td>
-                        <% Card.where(level: range).order(:name).map do |card| %>
-                            <input type="checkbox" name="<%= card.id %>" <%= (params[:card_ids] || []).include?(card.id) ? "checked" : "" %>>&nbsp;&nbsp;<%= card.name %></input>
-                            </br>
+                <% cards = [(1..40), (41..80), (81..120), (121..160), (161..200)].map do |range|
+                    Card.where(level: range).order(:name)
+                end
+                max_size = cards.map(&:size).max
+                even = false
+                (0...max_size).each do |card_index|
+                    %> <tr <%= even ? "class=even" : "" %>> <%
+                    (0...(cards.size)).each do |range_index|
+                        card = cards[range_index][card_index]
+                        %> <td> <%
+                        unless card.nil? %>
+                            <input type="checkbox" name="<%= card.id %>" <%= (params[:card_ids] || []).include?(card.id) ? "checked" : "" %>>&nbsp;&nbsp;<%= card.name %>
                         <% end %>
-                    </td>
-                    <% end %>
-                </tr>
+                    <% end
+                    even = !even %>
+                    </tr>
+                <% end %>
             </tbody>
         </table>
         <div>

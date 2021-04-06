@@ -7,8 +7,11 @@ def item_page(model, type)
         
         filter :name, filters: [:contains]
         filter :level, filters: [:greater_than, :less_than]
-        filter :recipe_count, filters: [:greater_than, :equals]
         filter :item_type, as: :check_boxes, collection: Item.item_types[type]
+
+        scope("Tout") { |scope| scope.where("true") }
+        scope("Avec recette") { |scope| scope.where("recipe_count > 0") }
+        scope("Sans recette") { |scope| scope.where("recipe_count = 0") }
 
         config.sort_order = "name_asc"
         index download_links: false do

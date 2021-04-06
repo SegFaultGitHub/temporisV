@@ -2,7 +2,14 @@ ActiveAdmin.register_page "Dashboard" do
     menu priority: 1
     
     content do
-        panel("Statistiques") do
+        panel "Accès" do
+            div do
+                span { "Envoyez moi un message sur Discord (" }
+                b { "SegFault#5814" }
+                span { ") avec votre pseudo pour avoir accès à toutes les fonctionnalités !" }
+            end
+        end if current_user.is_guest?
+        panel "Statistiques" do
             div { span { "Par " } + b { "SegFault#5814" } }
             br
             width = 200

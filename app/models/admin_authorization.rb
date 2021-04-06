@@ -4,6 +4,7 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
     def authorized?(action, subject = nil)
         # Retrieve subject class name
         classname = subject.is_a?(Class) ? subject.name : subject.class.name
+        user.set_active_at
 
         return true if user.is_admin?
         return false if classname == "User"

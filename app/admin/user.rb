@@ -13,6 +13,7 @@ ActiveAdmin.register User do
     column :role
     column :special_invitee
     column :active?
+    column :active_at
     actions
   end
 
@@ -21,6 +22,7 @@ ActiveAdmin.register User do
       row :email
       row :role
       row :special_invitee
+      row :active_at
     end
   end
 

@@ -33,6 +33,10 @@ ActiveAdmin.register_page "Dashboard" do
                     td { number_with_delimiter(Consumable.count, delimiter: " ") }
                 end
                 tr do
+                    td(width: width, align: "right") { b { "Nombre d'idoles" } }
+                    td { number_with_delimiter(Idol.count, delimiter: " ") }
+                end
+                tr do
                     td(width: width, align: "right") { b { "Nombre de recettes" } }
                     td { number_with_delimiter(Recipe.count, delimiter: ' ') }
                 end
@@ -56,6 +60,13 @@ ActiveAdmin.register_page "Dashboard" do
                     td do
                         count = Consumable.all.reject { |item| item.recipe_count == 0 }.size
                         "#{number_with_delimiter(count, delimiter: " ")} / #{number_with_delimiter(Consumable.count, delimiter: ' ')} (#{(count.to_f / Consumable.count.to_f * 100).round(4)}%)"
+                    end
+                end
+                tr do
+                    td(width: width, align: "right") { b { "Idoles avec recette" } }
+                    td do
+                        count = Idol.all.reject { |item| item.recipe_count == 0 }.size
+                        "#{number_with_delimiter(count, delimiter: " ")} / #{number_with_delimiter(Idol.count, delimiter: ' ')} (#{(count.to_f / Idol.count.to_f * 100).round(4)}%)"
                     end
                 end
                 tr do
@@ -104,6 +115,20 @@ ActiveAdmin.register_page "Dashboard" do
                         tbody do
                             even = false
                             Consumable.order('updated_at DESC').first(10).each do |consumable|
+                                tr(class: even ? :even : nil) { td { link_to consumable.name, [:admin, consumable] } }
+                                even = !even
+                            end
+                        end
+                    end
+                end
+                td do
+                    table class: :index_table do
+                        thead do
+                            th { link_to "Idoles", admin_consumables_path }
+                        end
+                        tbody do
+                            even = false
+                            Idol.order('updated_at DESC').first(10).each do |consumable|
                                 tr(class: even ? :even : nil) { td { link_to consumable.name, [:admin, consumable] } }
                                 even = !even
                             end

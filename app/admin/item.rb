@@ -1,4 +1,4 @@
-def item_page(model, type)
+def item_page(model)
     ActiveAdmin.register model do
         menu parent: "Items"
 
@@ -7,7 +7,7 @@ def item_page(model, type)
         
         filter :name, filters: [:contains]
         filter :level, filters: [:greater_than, :less_than]
-        filter :item_type, as: :check_boxes, collection: Item.item_types[type]
+        filter :item_type, as: :check_boxes, collection: model.item_types
 
         scope("Tout") { |scope| scope.where("true") }
         scope("Avec recette") { |scope| scope.where("recipe_count > 0") }
@@ -82,7 +82,7 @@ def item_page(model, type)
         form html: { enctype: "multipart/form-data" } do |f|
             f.inputs "Details" do
                 f.input :name, as: :string
-                f.input :item_type, collection: Item.item_types[type], input_html: { class: "select2" }
+                f.input :item_type, collection: model.item_types, input_html: { class: "select2" }
                 f.input :level, as: :number
             end
             f.actions

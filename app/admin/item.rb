@@ -23,7 +23,7 @@ def item_page(model)
             column :recipe_count
             column "Add recipe" do |item|
                 link_to "Ajouter une recette", "/admin/recipes/new?item_id=#{item.id}", class: "button_to"
-            end
+            end if (current_user.is_admin? || current_user.is_writer?)
         end
         
         show do
@@ -62,7 +62,7 @@ def item_page(model)
             end
             panel "" do
                 button_to "Ajouter une recette", "/admin/recipes/new", method: :get, params: { item_id: resource.id }
-            end
+            end if (current_user.is_admin? || current_user.is_writer?)
         end
         
         controller do

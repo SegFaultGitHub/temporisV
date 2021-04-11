@@ -28,6 +28,7 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
             return false if classname == "LevelUpCard"
             return false if classname == "Consumable"
             return false if classname == "Equipment"
+            return false if classname == "Idol"
             return false if classname == "ActiveAdmin::Page"
             return true if action == :read
         end

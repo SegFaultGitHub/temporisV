@@ -90,7 +90,14 @@ ActiveAdmin.register_page "Dashboard" do
             div { b { "Meilleurs contributeurs" } }
             br
             table do
-                contributors = ActiveRecord::Base.connection.execute("SELECT creator_id, count(*) FROM recipes GROUP BY creator_id").values
+                contributors = ActiveRecord::Base.connection.execute("
+                    SELECT creator_id, count(*)
+                    FROM recipes
+                    WHERE creator_id IS NOT NULL 
+                    GROUP BY creator_id
+                    ORDER BY 2 DESC
+                    LIMIT 5
+                ").values
                 contributors.map! do |user_id, count|
                     {
                         username: User.find_by(id: user_id)&.email || "-",

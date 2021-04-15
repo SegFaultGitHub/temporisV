@@ -12,84 +12,70 @@ ActiveAdmin.register_page "Dashboard" do
         panel "Statistiques" do
             div { span { "Par " } + b { "SegFault#5814" } }
             br
-            width = [20, 180]
-            table do
+            table(class: :dashboard_table) do
                 tr do
-                    td(width: width[0]) { }
-                    td(width: width[1], align: "right") { b { "Nombre d'inscrits" } }
-                    td { number_with_delimiter(User.count, delimiter: ' ') }
+                    td(width: "fit-content", align: "right") { b { "Nombre d'inscrits" } }
+                    td(width: "fit-content", align: "left") { number_with_delimiter(User.count, delimiter: ' ') }
                 end
-            end
-            table do
+                tr(height: 20) {}
                 tr do
-                    td(width: width[0]) { }
-                    td(width: width[1], align: "right") { b { "Nombre de cartes" } }
-                    td { number_with_delimiter(Card.count, delimiter: ' ') }
+                    td(width: "fit-content", align: "right") { b { "Nombre de cartes" } }
+                    td(width: "fit-content", align: "left") { number_with_delimiter(Card.count, delimiter: ' ') }
                 end
                 tr do
-                    td(width: width[0]) { }
-                    td(width: width[1], align: "right") { b { "Nombre d'équipements" } }
-                    td { number_with_delimiter(Equipment.count, delimiter: ' ') }
+                    td(width: "fit-content", align: "right") { b { "Nombre d'équipements" } }
+                    td(width: "fit-content", align: "left") { number_with_delimiter(Equipment.count, delimiter: ' ') }
                 end
                 tr do
-                    td(width: width[0]) { }
-                    td(width: width[1], align: "right") { b { "Nombre de consommables" } }
-                    td { number_with_delimiter(Consumable.count, delimiter: " ") }
+                    td(width: "fit-content", align: "right") { b { "Nombre de consommables" } }
+                    td(width: "fit-content", align: "left") { number_with_delimiter(Consumable.count, delimiter: " ") }
                 end
                 tr do
-                    td(width: width[0]) { }
-                    td(width: width[1], align: "right") { b { "Nombre d'idoles" } }
-                    td { number_with_delimiter(Idol.count, delimiter: " ") }
+                    td(width: "fit-content", align: "right") { b { "Nombre d'idoles" } }
+                    td(width: "fit-content", align: "left") { number_with_delimiter(Idol.count, delimiter: " ") }
                 end
                 tr do
-                    td(width: width[0]) { }
-                    td(width: width[1], align: "right") { b { "Nombre de recettes" } }
-                    td { number_with_delimiter(Recipe.count, delimiter: ' ') }
+                    td(width: "fit-content", align: "right") { b { "Nombre de recettes" } }
+                    td(width: "fit-content", align: "left") { number_with_delimiter(Recipe.count, delimiter: ' ') }
                 end
-            end
-            table do
+                tr(height: 20) {}
                 tr do
-                    td(width: width[0]) { }
-                    td(width: width[1], align: "right") { b { "Cartes trouvées" } }
-                    td do
+                    td(width: "fit-content", align: "right") { b { "Cartes trouvées" } }
+                    td(width: "fit-content", align: "left") do
                         "#{number_with_delimiter(Card.count, delimiter: " ")} / #{number_with_delimiter(642, delimiter: ' ')} (#{(Card.count.to_f / 642.0 * 100).round(4)}%)"
                     end
                 end
                 tr do
-                    td(width: width[0]) { }
-                    td(width: width[1], align: "right") { b { "Équipements avec recette" } }
-                    td do
+                    td(width: "fit-content", align: "right") { b { "Équipements avec recette" } }
+                    td(width: "fit-content", align: "left") do
                         count = Equipment.all.reject { |item| item.recipe_count == 0 }.size
                         "#{number_with_delimiter(count, delimiter: " ")} / #{number_with_delimiter(Equipment.count, delimiter: ' ')} (#{(count.to_f / Equipment.count.to_f * 100).round(4)}%)"
                     end
                 end
                 tr do
-                    td(width: width[0]) { }
-                    td(width: width[1], align: "right") { b { "Consommables avec recette" } }
-                    td do
+                    td(width: "fit-content", align: "right") { b { "Consommables avec recette" } }
+                    td(width: "fit-content", align: "left") do
                         count = Consumable.all.reject { |item| item.recipe_count == 0 }.size
                         "#{number_with_delimiter(count, delimiter: " ")} / #{number_with_delimiter(Consumable.count, delimiter: ' ')} (#{(count.to_f / Consumable.count.to_f * 100).round(4)}%)"
                     end
                 end
                 tr do
-                    td(width: width[0]) { }
-                    td(width: width[1], align: "right") { b { "Idoles avec recette" } }
-                    td do
+                    td(width: "fit-content", align: "right") { b { "Idoles avec recette" } }
+                    td(width: "fit-content", align: "left") do
                         count = Idol.all.reject { |item| item.recipe_count == 0 }.size
                         "#{number_with_delimiter(count, delimiter: " ")} / #{number_with_delimiter(Idol.count, delimiter: ' ')} (#{(count.to_f / Idol.count.to_f * 100).round(4)}%)"
                     end
                 end
                 tr do
-                    td(width: width[0]) { }
-                    td(width: width[1], align: "right") { b { "Recettes trouvées" } }
-                    td do
+                    td(width: "fit-content", align: "right") { b { "Recettes trouvées" } }
+                    td(width: "fit-content", align: "left") do
                         "#{number_with_delimiter(Recipe.count, delimiter: " ")} / #{number_with_delimiter(Card.total_recipes, delimiter: ' ')} (#{(Recipe.count.to_f / Card.total_recipes.to_f * 100).round(4)}%)"
                     end
                 end
             end
             div { b { "Meilleurs contributeurs" } }
             br
-            table do
+            table(class: :dashboard_table) do
                 contributors = ActiveRecord::Base.connection.execute("
                     SELECT creator_id, count(*)
                     FROM recipes
@@ -110,29 +96,29 @@ ActiveAdmin.register_page "Dashboard" do
                     })
                 end
                 tr do
-                    td(width: width[0], align: "center") { b { "🥇" } }
-                    td(width: width[1], align: "right") { b { contributors[0][:username] } }
-                    td { number_with_delimiter(contributors[0][:count], delimiter: ' ') }
+                    td(width: "fit-content", align: "center") { b { "🥇" } }
+                    td(width: "fit-content", align: "right") { b { contributors[0][:username] } }
+                    td(width: "fit-content", align: "left")  { number_with_delimiter(contributors[0][:count], delimiter: ' ') }
                 end
                 tr do
-                    td(width: width[0], align: "center") { b { "🥈" } }
-                    td(width: width[1], align: "right") { b { contributors[1][:username] } }
-                    td { number_with_delimiter(contributors[1][:count], delimiter: ' ') }
+                    td(width: "fit-content", align: "center") { b { "🥈" } }
+                    td(width: "fit-content", align: "right") { b { contributors[1][:username] } }
+                    td(width: "fit-content", align: "left")  { number_with_delimiter(contributors[1][:count], delimiter: ' ') }
                 end
                 tr do
-                    td(width: width[0], align: "center") { b { "🥉" } }
-                    td(width: width[1], align: "right") { b { contributors[2][:username] } }
-                    td { number_with_delimiter(contributors[2][:count], delimiter: ' ') }
+                    td(width: "fit-content", align: "center") { b { "🥉" } }
+                    td(width: "fit-content", align: "right") { b { contributors[2][:username] } }
+                    td(width: "fit-content", align: "left") { number_with_delimiter(contributors[2][:count], delimiter: ' ') }
                 end
                 tr do
-                    td(width: width[0], align: "center") { }
-                    td(width: width[1], align: "right") { b { contributors[3][:username] } }
-                    td { number_with_delimiter(contributors[3][:count], delimiter: ' ') }
+                    td(width: "fit-content", align: "center") { }
+                    td(width: "fit-content", align: "right") { b { contributors[3][:username] } }
+                    td(width: "fit-content", align: "left") { number_with_delimiter(contributors[3][:count], delimiter: ' ') }
                 end
                 tr do
-                    td(width: width[0], align: "center") { }
-                    td(width: width[1], align: "right") { b { contributors[4][:username] } }
-                    td { number_with_delimiter(contributors[4][:count], delimiter: ' ') }
+                    td(width: "fit-content", align: "center") { }
+                    td(width: "fit-content", align: "right") { b { contributors[4][:username] } }
+                    td(width: "fit-content", align: "left") { number_with_delimiter(contributors[4][:count], delimiter: ' ') }
                 end
             end
         end

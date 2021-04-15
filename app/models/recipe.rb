@@ -9,6 +9,7 @@ class Recipe < ActiveRecord::Base
     validate :validate_recipe
     before_save :update_item_card_recipe_count
     before_save :sort_cards
+    before_save :prevent_creator_id_update
     before_destroy :decrement_item_card_recipe_count
 
     def validate_recipe
@@ -60,6 +61,10 @@ class Recipe < ActiveRecord::Base
         self.card3 = sorted_cards[2]
         self.card4 = sorted_cards[3]
         self.card5 = sorted_cards[4]
+    end
+    def prevent_creator_id_update
+        return if changes[:creator_id].first.nil?
+        self.creator_id = changes[:creator_id].first
     end
     def decrement_item_card_recipe_count
         item.update!(recipe_count: item.recipe_count - 1)

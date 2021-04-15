@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_124807) do
+ActiveRecord::Schema.define(version: 2021_04_15_141718) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,12 +54,14 @@ ActiveRecord::Schema.define(version: 2021_04_06_124807) do
     t.integer "quantity", default: 1, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "creator_id"
     t.index ["card1_id", "card2_id", "card3_id", "card4_id", "card5_id"], name: "index_recipes_on_cards", unique: true
     t.index ["card1_id"], name: "index_recipes_on_card1_id"
     t.index ["card2_id"], name: "index_recipes_on_card2_id"
     t.index ["card3_id"], name: "index_recipes_on_card3_id"
     t.index ["card4_id"], name: "index_recipes_on_card4_id"
     t.index ["card5_id"], name: "index_recipes_on_card5_id"
+    t.index ["creator_id"], name: "index_recipes_on_creator_id"
   end
 
   create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

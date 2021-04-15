@@ -15,6 +15,11 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
                 return user.is_special_invitee? if action.in? [:create, :read, :update, :destroy]
                 return false
             end
+            if action.in? [:create, :update, :destroy]
+                return false if classname == "Consumable"
+                return false if classname == "Equipment"
+                return false if classname == "Idol"
+            end
             return true if action.in? [:create, :read, :update, :destroy]
         elsif user.is_reader?
             if classname == "ActiveAdmin::Page"

@@ -8,7 +8,7 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
 
         return true if user.is_admin?
         return false if classname == "User"
-        return true if classname == "ActiveAdmin::Page" and subject.name == "Dashboard"
+        return true if classname == "ActiveAdmin::Page" and subject.name == "dashboard"
 
         if user.is_writer?
             if classname == "ActiveAdmin::Page"

@@ -1,7 +1,7 @@
-ActiveAdmin.register_page "Dashboard" do
-    menu priority: 1
-    
-    content do
+ActiveAdmin.register_page "dashboard" do
+    menu priority: 1, label: "Tableau de bord"
+
+    content title: "Tableau de bord" do
         panel "Accès" do
             div do
                 span { "Envoyez moi un message sur Discord (" }
@@ -76,14 +76,16 @@ ActiveAdmin.register_page "Dashboard" do
             div { b { "Meilleurs contributeurs" } }
             br
             table(class: :dashboard_table) do
-                contributors = ActiveRecord::Base.connection.execute("
-                    SELECT creator_id, count(*)
-                    FROM recipes
-                    WHERE creator_id IS NOT NULL 
-                    GROUP BY creator_id
-                    ORDER BY 2 DESC
-                    LIMIT 5
-                ").values
+                contributors = ActiveRecord::Base.connection.execute(
+                    <<~SQL
+                        SELECT creator_id, count(*)
+                        FROM recipes
+                        WHERE creator_id IS NOT NULL 
+                        GROUP BY creator_id
+                        ORDER BY 2 DESC
+                        LIMIT 5
+                    SQL
+                ).values
                 contributors.map! do |user_id, count|
                     {
                         username: User.find_by(id: user_id)&.email || "-",
@@ -183,8 +185,8 @@ ActiveAdmin.register_page "Dashboard" do
                 td do
                     table class: :index_table do
                         thead do
-                            th { link_to "Recette", admin_recipes_path }
-                            th {}
+                            th(colspan: 2) { link_to "Recettes", admin_recipes_path }
+                            # th {}
                         end
                         tbody do
                             even = false

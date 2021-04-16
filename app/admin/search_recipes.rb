@@ -1,7 +1,7 @@
-ActiveAdmin.register_page "Search recipes" do
-    menu parent: "Tools"
+ActiveAdmin.register_page "search_recipes" do
+    menu parent: "Outils", label: "Chercher des recettes"
     
-    content do
+    content title: "Chercher des recettes" do
         panel "Qu'est ce que je peux crafter ?" do
             div { render partial: "form_search" }
             div do
@@ -47,14 +47,14 @@ def table_for_recipes(card_ids, recipes)
     table class: :index_table do
         thead do
             tr do
-                th { "Item" }
+                th { "Objet" }
                 th { "Type" }
-                th { "Card 1" }
-                th { "Card 2" }
-                th { "Card 3" }
-                th { "Card 4" }
-                th { "Card 5" }
-                th { "Quantity" }
+                th { "Carte #1" }
+                th { "Carte #2" }
+                th { "Carte #3" }
+                th { "Carte #4" }
+                th { "Carte #5" }
+                th { "Quantité" }
             end
         end
         tbody do

@@ -1,7 +1,7 @@
-ActiveAdmin.register_page "Random recipes" do
-    menu parent: "Tools"
+ActiveAdmin.register_page "random_recipes" do
+    menu parent: "Outils", label: "Recettes aléatoires"
     
-    content do
+    content title: "Recettes aléatoires" do
         panel "Recettes inconnues aléatoires" do
             count = 0
             all_cards = Card.all
@@ -26,11 +26,11 @@ ActiveAdmin.register_page "Random recipes" do
                 end
                 table class: :index_table do
                     thead do
-                        th { "Card 1" }
-                        th { "Card 2" }
-                        th { "Card 3" }
-                        th { "Card 4" }
-                        th { "Card 5" }
+                        th { "Carte #1" }
+                        th { "Carte #2" }
+                        th { "Carte #3" }
+                        th { "Carte #4" }
+                        th { "Carte #5" }
                         th {} if (current_user.is_admin? || current_user.is_writer?)
                     end
                     tbody do

@@ -2,6 +2,8 @@
 
 class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
     def authorized?(action, subject = nil)
+        user.set_active_at
+
         # Retrieve subject class name
         page =  if subject.is_a?(ActiveAdmin::Page) || subject.is_a?(Class)
                     subject.name

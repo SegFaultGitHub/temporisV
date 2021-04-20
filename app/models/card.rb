@@ -23,6 +23,11 @@ class Card < ActiveRecord::Base
         end
     end
 
+    validate :validate_color
+    def validate_color
+        errors.add(:color, "Invalid color") unless self.color.in? Card.colors
+    end
+
     has_many :recipes_card1, foreign_key: "card1_id", class_name: "Recipe", dependent: :restrict_with_error
     has_many :recipes_card2, foreign_key: "card2_id", class_name: "Recipe", dependent: :restrict_with_error
     has_many :recipes_card3, foreign_key: "card3_id", class_name: "Recipe", dependent: :restrict_with_error
@@ -38,11 +43,19 @@ class Card < ActiveRecord::Base
         ", self.id, self.id, self.id, self.id, self.id)
     end
 
+    def pretty_name
+        "#{"⭐ " if self.super_card}#{self.name}"
+    end
+
     class << self
         def total_recipes
             fact = lambda { |n| (1..n).inject(1, :*) } 
             count = Card.count
             fact.call(count) / (fact.call(count - 5) * fact.call(5))
+        end
+
+        def colors
+            ["Cœur", "Pique", "Trèfle", "Carreau", "Bonus"]
         end
     end
 end

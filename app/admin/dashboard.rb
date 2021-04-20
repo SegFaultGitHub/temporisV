@@ -134,7 +134,7 @@ ActiveAdmin.register_page "dashboard" do
                         tbody do
                             even = false
                             Card.order('updated_at DESC').first(10).each do |card|
-                                tr(class: even ? :even : nil) { td { link_to card.name, [:admin, card] } }
+                                tr(class: even ? :even : nil) { td { link_to card.pretty_name, [:admin, card] } }
                                 even = !even
                             end
                         end

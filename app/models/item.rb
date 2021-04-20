@@ -10,8 +10,10 @@ class Item < ActiveRecord::Base
 
     def truncate_name
         self.name.strip!
-        self.name.gsub!(/\s+/, "  ")
-        self.name.gsub!(/(^\[|\]$)/, '')
+        self.name.gsub!(/\s+/, " ")
+        self.name.gsub!(/\]$/, "")
+        self.name.gsub!(/^\[/, "")
+        self.name.strip!
     end
     def validate_name
         errors.add(:name, "Duplicate name") if Item.select do |item|

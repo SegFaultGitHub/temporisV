@@ -8,6 +8,10 @@ class Card < ActiveRecord::Base
     before_validation :truncate_name
     def truncate_name
         self.name.strip!
+        self.name.gsub!(/\s+/, " ")
+        self.name.gsub!(/\]$/, "")
+        self.name.gsub!(/^\[/, "")
+        self.name.strip!
     end
 
     validate :validate_name

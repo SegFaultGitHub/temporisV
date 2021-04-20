@@ -20,7 +20,7 @@
                         card = cards[range_index][card_index]
                         %> <td> <%
                         unless card.nil? %>
-                            <input type="checkbox" name="<%= card.id %>" <%= (params[:card_ids] || []).include?(card.id) ? "checked" : "" %>>&nbsp;&nbsp;<%= card.name %>
+                            <input type="checkbox" name="<%= card.id %>" <%= (params[:card_ids] || []).include?(card.id) ? "checked" : "" %>>&nbsp;&nbsp;<%= card.pretty_name %>
                         <% end %>
                     <% end
                     even = !even %>

@@ -11,7 +11,7 @@ ActiveAdmin.register LevelUpCard do
     config.sort_order = "level_asc"
     index download_links: false do
         column "Nom" do |level_up_card|
-            link_to level_up_card.card.name, [:admin, level_up_card.card]
+            link_to level_up_card.card.pretty_name, [:admin, level_up_card.card]
         end
         column "Niveau", sortable: "level" do
             |level_up_card| "#{level_up_card.level - 1} ➜ #{level_up_card.level}"

@@ -66,9 +66,9 @@ def table_for_recipes(card_ids, recipes)
                     recipe.cards.partition { |card| card_ids.include?(card.id) }.each do |partition|
                         partition.each do |card|
                             if card_ids.include? card.id
-                                td { link_to card.name, [:admin, card] }
+                                td { link_to card.pretty_name, [:admin, card] }
                             else
-                                td { s { link_to card.name, [:admin, card] } }
+                                td { s { link_to card.pretty_name, [:admin, card] } }
                             end
                         end
                     end

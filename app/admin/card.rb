@@ -57,9 +57,9 @@ ActiveAdmin.register Card do
                                     td { recipe.item.descriptive_type }
                                     recipe.cards.each do |card|
                                         if (card.id == resource.id)
-                                            td { b { link_to card.pretty_name, [:admin, card] } }
+                                            td { b { link_to "#{card.pretty_name} - Niv. #{card.level}", [:admin, card] } }
                                         else
-                                            td { link_to card.pretty_name, [:admin, card] }
+                                            td { link_to "#{card.pretty_name} - Niv. #{card.level}", [:admin, card] }
                                         end
                                     end
                                     td { recipe.quantity }

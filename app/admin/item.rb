@@ -46,11 +46,11 @@ def item_page(model, label)
                                 even = false
                                 resource.recipes.each do |recipe|
                                     tr(class: even ? :even : nil) do
-                                        td { link_to recipe.card1.name, [:admin, recipe.card1] }
-                                        td { link_to recipe.card2.name, [:admin, recipe.card2] }
-                                        td { link_to recipe.card3.name, [:admin, recipe.card3] }
-                                        td { link_to recipe.card4.name, [:admin, recipe.card4] }
-                                        td { link_to recipe.card5.name, [:admin, recipe.card5] }
+                                        td { link_to "#{recipe.card1.pretty_name} - Niv. #{recipe.card1.level}", [:admin, recipe.card1] }
+                                        td { link_to "#{recipe.card2.pretty_name} - Niv. #{recipe.card2.level}", [:admin, recipe.card2] }
+                                        td { link_to "#{recipe.card3.pretty_name} - Niv. #{recipe.card3.level}", [:admin, recipe.card3] }
+                                        td { link_to "#{recipe.card4.pretty_name} - Niv. #{recipe.card4.level}", [:admin, recipe.card4] }
+                                        td { link_to "#{recipe.card5.pretty_name} - Niv. #{recipe.card5.level}", [:admin, recipe.card5] }
                                         td { recipe.quantity }
                                     end
                                     even = !even

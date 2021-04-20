@@ -38,7 +38,7 @@ ActiveAdmin.register_page "random_recipes" do
                         recipes.each do |recipe|
                             tr(class: even ? :even : nil) do
                                 recipe.each do |card|
-                                    td { link_to card.name, [:admin, card] }
+                                    td { link_to "#{card.pretty_name} - Niv. #{card.level}", [:admin, card] }
                                 end
                                 td do
                                     button_to "Ajouter une recette", "/admin/recipes/new", method: :get, params: {

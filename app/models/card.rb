@@ -56,7 +56,7 @@ class Card < ActiveRecord::Base
                 when "Bonus"
                     "★"
                 end
-        "#{color} #{self.name}#{"  ⭐" if self.super_card}"
+        "#{color} #{self.name}#{" ⭐" if self.super_card}"
     end
 
     class << self

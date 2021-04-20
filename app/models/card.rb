@@ -44,7 +44,19 @@ class Card < ActiveRecord::Base
     end
 
     def pretty_name
-        "#{"⭐ " if self.super_card}#{self.name}"
+        color = case self.color
+                when "Cœur"
+                    "♥️"
+                when "Pique"
+                    "♠️"
+                when "Trèfle"
+                    "♣️"
+                when "Carreau"
+                    "♦️"
+                when "Bonus"
+                    "★"
+                end
+        "#{color} #{self.name}#{"  ⭐" if self.super_card}"
     end
 
     class << self

@@ -1,7 +1,7 @@
-ActiveAdmin.register_page "Unknown recipes" do
-    menu parent: "Tools"
+ActiveAdmin.register_page "unknown_recipes" do
+    menu parent: "Outils", label: "Recettes inconnues"
     
-    content do
+    content title: "Recettes inconnues" do
         panel "Recettes inconnues" do
             div { render partial: "form_unknown" }
             div do
@@ -45,11 +45,11 @@ def table_for_unknown_recipes(cards, recipes)
     table class: :index_table do
         thead do
             tr do
-                th { "Card 1" }
-                th { "Card 2" }
-                th { "Card 3" }
-                th { "Card 4" }
-                th { "Card 5" }
+                th { "Carte #1" }
+                th { "Carte #2" }
+                th { "Carte #3" }
+                th { "Carte #4" }
+                th { "Carte #5" }
                 th {} if (current_user.is_admin? || current_user.is_writer?)
             end
         end
@@ -58,7 +58,7 @@ def table_for_unknown_recipes(cards, recipes)
             recipes.each do |recipe|
                 tr(class: even ? :even : nil) do
                     recipe.each do |card|
-                        td { link_to card.name, [:admin, card] }
+                        td { link_to card.pretty_name, [:admin, card] }
                     end
                     td do
                         button_to "Ajouter une recette", "/admin/recipes/new", method: :get, params: {

@@ -1,7 +1,7 @@
-ActiveAdmin.register_page "Random recipes" do
-    menu parent: "Tools"
+ActiveAdmin.register_page "random_recipes" do
+    menu parent: "Outils", label: "Recettes aléatoires"
     
-    content do
+    content title: "Recettes aléatoires" do
         panel "Recettes inconnues aléatoires" do
             count = 0
             all_cards = Card.all
@@ -26,11 +26,11 @@ ActiveAdmin.register_page "Random recipes" do
                 end
                 table class: :index_table do
                     thead do
-                        th { "Card 1" }
-                        th { "Card 2" }
-                        th { "Card 3" }
-                        th { "Card 4" }
-                        th { "Card 5" }
+                        th { "Carte #1" }
+                        th { "Carte #2" }
+                        th { "Carte #3" }
+                        th { "Carte #4" }
+                        th { "Carte #5" }
                         th {} if (current_user.is_admin? || current_user.is_writer?)
                     end
                     tbody do
@@ -38,7 +38,7 @@ ActiveAdmin.register_page "Random recipes" do
                         recipes.each do |recipe|
                             tr(class: even ? :even : nil) do
                                 recipe.each do |card|
-                                    td { link_to card.name, [:admin, card] }
+                                    td { link_to "#{card.pretty_name} - Niv. #{card.level}", [:admin, card] }
                                 end
                                 td do
                                     button_to "Ajouter une recette", "/admin/recipes/new", method: :get, params: {

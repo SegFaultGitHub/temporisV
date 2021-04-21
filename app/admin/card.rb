@@ -1,11 +1,13 @@
 ActiveAdmin.register Card do
-    menu parent: "Items"
+    menu parent: "Objets"
 
     actions :all
-    permit_params :name, :level
+    permit_params :name, :level, :color, :super_card
 
-    filter :name, filters: [:contains]
-    filter :level, filters: [:greater_than, :less_than]
+    filter :name, filters: [:contains], label: "Nom"
+    filter :level, filters: [:greater_than, :less_than], label: "Niveau"
+    filter :color, as: :check_boxes, collection: Card.colors, label: "Couleur"
+    filter :super_card, label: "Super carte"
 
     scope("Tout") { |scope| scope.where("true") }
     scope("Avec recette") { |scope| scope.where("recipe_count > 0") }
@@ -13,35 +15,39 @@ ActiveAdmin.register Card do
 
     config.sort_order = "name_asc"
     index download_links: false do
-        column "Name" do |card|
-            link_to card.name, [:admin, card]
+        column "Nom", sortable: "name" do |card|
+            link_to card.pretty_name, [:admin, card]
         end
-        column :level
-        column :recipe_count
-        column "Level-up Card" do |card|
+        column "Niveau", sortable: "level", &:level
+        column "Couleur", sortable: "color", &:color
+        column "Super carte", sortable: "super_card", &:super_card
+        column "Nombre de recettes", sortable: "recipe_count", &:recipe_count
+        column "Carte de niveau" do |card|
             "#{card.level_up_card.level - 1} ➜ #{card.level_up_card.level}" if card.level_up_card
         end
     end
     
     show do
         attributes_table do
-            row :name
-            row :level
-            row :level_up_card do
+            row "Nom", &:name
+            row "Niveau", &:level
+            row "Couleur", &:color
+            row "Super carte", &:super_card
+            row "Carte de niveau" do
                 "#{resource.level_up_card.level - 1} ➜ #{resource.level_up_card.level}"
             end if resource.level_up_card
-            row :recipes do
+            row "Recettes" do
                 unless resource.recipes.empty?
                     table class: :index_table do
                         thead do
-                            th { "Item" }
+                            th { "Objet" }
                             th { "Type" }
-                            th { "Card 1" }
-                            th { "Card 2" }
-                            th { "Card 3" }
-                            th { "Card 4" }
-                            th { "Card 5" }
-                            th { "Quantity" }
+                            th { "Carte #1" }
+                            th { "Carte #2" }
+                            th { "Carte #3" }
+                            th { "Carte #4" }
+                            th { "Carte #5" }
+                            th { "Quantité" }
                         end
                         tbody do
                             even = false
@@ -51,9 +57,9 @@ ActiveAdmin.register Card do
                                     td { recipe.item.descriptive_type }
                                     recipe.cards.each do |card|
                                         if (card.id == resource.id)
-                                            td { b { link_to card.name, [:admin, card] } }
+                                            td { b { link_to "#{card.pretty_name} - Niv. #{card.level}", [:admin, card] } }
                                         else
-                                            td { link_to card.name, [:admin, card] }
+                                            td { link_to "#{card.pretty_name} - Niv. #{card.level}", [:admin, card] }
                                         end
                                     end
                                     td { recipe.quantity }
@@ -66,7 +72,7 @@ ActiveAdmin.register Card do
             end
         end
         panel "" do
-            button_to "Ajouter une carte de montée de niveau", "/admin/level_up_cards/new", method: :get, params: { card_id: resource.id }
+            button_to "Ajouter une carte de niveau", "/admin/level_up_cards/new", method: :get, params: { card_id: resource.id }
         end unless resource.level_up_card
     end
     
@@ -85,9 +91,11 @@ ActiveAdmin.register Card do
     end
     
     form html: { enctype: "multipart/form-data" } do |f|
-        f.inputs "Details" do
-            f.input :name, as: :string
-            f.input :level, as: :number
+        f.inputs "Détails" do
+            f.input :name, as: :string, label: "Nom"
+            f.input :level, as: :number, label: "Niveau"
+            f.input :color, as: :select, collection: Card.colors, label: "Couleur"
+            f.input :super_card, as: :boolean, label: "Super carte"
         end
         f.actions
     end

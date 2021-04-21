@@ -1,20 +1,19 @@
 ActiveAdmin.register LevelUpCard do
-    menu priority: 2
+    menu priority: 3, label: "Cartes de niveau"
     
     actions :all, except: [:show]
 
     permit_params :card_id, :level
     
-    filter :name, filters: [:contains]
-    filter :level, filters: [:greater_than, :less_than]
-    filter :recipe_count, filters: [:greater_than, :equals]
+    filter :name, filters: [:contains], label: "Nom"
+    filter :level, filters: [:greater_than, :less_than], label: "Niveau"
     
     config.sort_order = "level_asc"
     index download_links: false do
-        column "Name" do |level_up_card|
-            link_to level_up_card.card.name, [:admin, level_up_card.card]
+        column "Nom" do |level_up_card|
+            link_to level_up_card.card.pretty_name, [:admin, level_up_card.card]
         end
-        column :level do
+        column "Niveau", sortable: "level" do
             |level_up_card| "#{level_up_card.level - 1} ➜ #{level_up_card.level}"
         end
         actions
@@ -35,13 +34,13 @@ ActiveAdmin.register LevelUpCard do
     end
     
     form html: { enctype: "multipart/form-data" } do |f|
-        f.inputs "Details" do
+        f.inputs "Détails" do
             if params[:card_id]
-                f.input :card, collection: Card.order(:name), selected: params[:card_id], input_html: { class: "select2" }
+                f.input :card, collection: Card.order(:name).map { |card| [card.pretty_name, card.id] }, selected: params[:card_id], input_html: { class: "select2" }, label: "Carte"
             else
-                f.input :card, collection: Card.order(:name), input_html: { class: "select2" }
+                f.input :card, collection: Card.order(:name).map { |card| [card.pretty_name, card.id] }, input_html: { class: "select2" }, label: "Carte"
             end
-            f.input :level, as: :number
+            f.input :level, as: :number, label: "Niveau"
         end
         f.actions
     end

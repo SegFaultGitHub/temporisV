@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_15_141718) do
+ActiveRecord::Schema.define(version: 2021_04_20_172634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,11 @@ ActiveRecord::Schema.define(version: 2021_04_15_141718) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "recipe_count", default: 0, null: false
+    t.text "color", null: false
+    t.boolean "super_card", default: false, null: false
+    t.index ["color"], name: "index_cards_on_color"
     t.index ["name"], name: "index_cards_on_name", unique: true
+    t.index ["super_card"], name: "index_cards_on_super_card"
   end
 
   create_table "items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

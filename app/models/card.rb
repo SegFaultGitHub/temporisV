@@ -8,6 +8,10 @@ class Card < ActiveRecord::Base
     before_validation :truncate_name
     def truncate_name
         self.name.strip!
+        self.name.gsub!(/\s+/, " ")
+        self.name.gsub!(/\]$/, "")
+        self.name.gsub!(/^\[/, "")
+        self.name.strip!
     end
 
     validate :validate_name
@@ -17,6 +21,11 @@ class Card < ActiveRecord::Base
         end.any? do |card|
             card.name.parameterize() == self.name.parameterize()
         end
+    end
+
+    validate :validate_color
+    def validate_color
+        errors.add(:color, "Invalid color") unless self.color.in? Card.colors
     end
 
     has_many :recipes_card1, foreign_key: "card1_id", class_name: "Recipe", dependent: :restrict_with_error
@@ -34,11 +43,31 @@ class Card < ActiveRecord::Base
         ", self.id, self.id, self.id, self.id, self.id)
     end
 
+    def pretty_name
+        color = case self.color
+                when "Cœur"
+                    "♥️"
+                when "Pique"
+                    "♠️"
+                when "Trèfle"
+                    "♣️"
+                when "Carreau"
+                    "♦️"
+                when "Bonus"
+                    "★"
+                end
+        "#{color} #{self.name}#{" ⭐" if self.super_card}"
+    end
+
     class << self
         def total_recipes
             fact = lambda { |n| (1..n).inject(1, :*) } 
             count = Card.count
             fact.call(count) / (fact.call(count - 5) * fact.call(5))
+        end
+
+        def colors
+            ["Cœur", "Pique", "Trèfle", "Carreau", "Bonus"]
         end
     end
 end

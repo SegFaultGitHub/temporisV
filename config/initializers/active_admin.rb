@@ -13,9 +13,9 @@ ActiveAdmin.setup do |config|
   config.namespace :admin do |admin|
     # priority: 1 -> "Dashboard"
     admin.build_menu do |menu|
-      menu.add label: "Items", priority: 2
+      menu.add label: "Objets", priority: 2
       # priority: 3 -> "Recipes", "Level up Cards"
-      menu.add label: "Tools", priority: 4
+      menu.add label: "Outils", priority: 4
     end
   end
 end

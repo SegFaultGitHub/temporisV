@@ -41,7 +41,7 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
             "Consumable" =>  [:read],
             "Equipment" =>   [:read],
             "Idol" =>        [:read],
-            "LevelUpCard" => [:create, :read, :destroy],
+            # "LevelUpCard" => [:create, :read, :destroy],
             "dashboard" =>   [:read],
             special: {
                 "search_recipes" =>  [:read],
@@ -58,7 +58,7 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
             "Consumable" =>  [:read],
             "Equipment" =>   [:read],
             "Idol" =>        [:read],
-            "LevelUpCard" => [:read],
+            # "LevelUpCard" => [:read],
             "dashboard" =>   [:read],
             special: {
                 "search_recipes" =>  [:read],

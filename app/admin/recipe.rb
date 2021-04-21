@@ -2,7 +2,7 @@ ActiveAdmin.register Recipe do
     menu priority: 3, label: "Recettes"
 
     actions :all
-    permit_params :item_id, :card1_id, :card2_id, :card3_id, :card4_id, :card5_id, :quantity
+    permit_params :item_id, :card1_id, :card2_id, :card3_id, :card4_id, :card5_id, :quantity, :creator_id
 
     before_filter :skip_sidebar!, only: :index
     config.sort_order = "updated_at_desc"
@@ -108,6 +108,7 @@ ActiveAdmin.register Recipe do
                 f.input :card5, collection: Card.order(:name).map { |card| [card.pretty_name, card.id] }, input_html: { class: "select2" }, label: "Carte #5"
             end
             f.input :quantity, as: :number, default: 1, label: "Quantité"
+            f.input :creator_id, input_html: { value: current_user.id }, as: :hidden
         end
         f.actions
     end

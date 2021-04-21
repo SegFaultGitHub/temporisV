@@ -36,7 +36,7 @@ class AdminAuthorization < ActiveAdmin::AuthorizationAdapter
 
     def writer_authorizations
         {
-            "Card" =>        [:create, :read, :update, :destroy],
+            "Card" =>        [:read],
             "Recipe" =>      [:create, :read, :update, :destroy],
             "Consumable" =>  [:read],
             "Equipment" =>   [:read],
